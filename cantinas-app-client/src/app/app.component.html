@@ -1,0 +1,98 @@
+<clr-main-container>
+
+    <clr-header>
+        <div class="branding">
+            <a href="#" class="nav-link">
+                <span class="clr-icon clr-clarity-logo"></span>
+                <span class="title">Cantinas</span>
+            </a>
+        </div>
+        <div class="header-nav" [clr-nav-level]="1">
+            <a class="nav-link" href="#" [routerLink]="['/home']" routerLinkActive="active">
+                <span class="nav-text">Home</span>
+            </a>
+            <a class="nav-link" href="#" [routerLink]="['/about']" routerLinkActive="active">
+                <span class="nav-text">About</span>
+            </a>
+
+            <!-- <clr-dropdown>
+                <a class="nav-link" clrDropdownTrigger>
+                    <span class="nav-text">More Actions</span>
+                </a>
+
+                <clr-dropdown-menu clrPosition="bottom-right">
+                    <a href="javascript://" class="dropdown-item" clrDropdownItem>Shutdown</a>
+                    <a href="javascript://" class="dropdown-item" clrDropdownItem>Delete</a>
+                    <a href="javascript://" class="dropdown-item" clrDropdownItem>Reboot</a>
+                </clr-dropdown-menu>
+            </clr-dropdown> -->
+
+        </div>
+
+        <div class="header-actions">
+            <a *ngIf="!auth.isLoggedIn()" class="nav-link" href="#" [routerLink]="['/login']">
+                <span class="nav-text">Login</span>
+            </a>
+
+            <clr-dropdown *ngIf="auth.isLoggedIn()">
+                <button class="nav-text" clrDropdownTrigger>
+                    john.doe
+                    <clr-icon shape="caret down"></clr-icon>
+                </button>
+                <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+                    <a href="..." clrDropdownItem>Preferences</a>
+                    <a href="..." clrDropdownItem>Log out</a>
+                </clr-dropdown-menu>
+            </clr-dropdown>
+        </div>
+    </clr-header>
+
+    <div class="content-container">
+        <div class="content-area" [@routerTransition]="getState(o)" style2="background-color: green">
+            <router-outlet #o="outlet"></router-outlet>
+        </div>
+
+        <clr-vertical-nav [clrVerticalNavCollapsible]="true" [(clrVerticalNavCollapsed)]="verticalNavIsCollapsed" [clr-nav-level]="2"
+            class="nav-trigger--bottom">
+
+            <a clrVerticalNavLink routerLink="./home" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="sad-face"></clr-icon>
+                Acasa
+            </a>
+
+            <a clrVerticalNavLink routerLink="./users" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="shield"></clr-icon>
+                Utilizatori
+            </a>
+            <a clrVerticalNavLink routerLink="./dishes" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="certificate"></clr-icon>
+                Feluri de mancare
+            </a>
+
+            <clr-vertical-nav-group routerLinkActive="active" [clrVerticalNavGroupExpanded]="navGroupAdminIsExpanded">
+                <!-- <a routerLink="./admin" hidden aria-hidden="true"></a> -->
+                <clr-icon shape="user" clrVerticalNavIcon></clr-icon>
+                Admin
+                <clr-vertical-nav-group-children>
+                    <a clrVerticalNavLink routerLink="./home2" routerLinkActive="active">
+                        Users
+                    </a>
+                    <a clrVerticalNavLink routerLink="./entities" routerLinkActive="active">
+                        Entities
+                    </a>
+                    <a clrVerticalNavLink routerLink="./about2" routerLinkActive="active">
+                        Settings
+                    </a>
+                </clr-vertical-nav-group-children>
+            </clr-vertical-nav-group>
+
+            <a clrVerticalNavLink routerLink="./about" routerLinkActive="active">
+                <clr-icon clrVerticalNavIcon shape="bug"></clr-icon>
+                Despre
+            </a>
+
+        </clr-vertical-nav>
+
+    </div>
+
+</clr-main-container>

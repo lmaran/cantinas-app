@@ -1,0 +1,6 @@
+cantinas-app-client/dist
+cantinas-app-client/node_modules
+
+cantinas-app-server/dist
+cantinas-app-server/node_modules
+cantinas-app-server/src/config/development.ts
