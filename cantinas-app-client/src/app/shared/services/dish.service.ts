@@ -12,17 +12,7 @@ export class DishService {
     constructor(private http: HttpClient) {}
 
     public getAllDishes(): Observable<Dish[]> {
-        return (
-            this.http
-                // .get(API_URL + '/dishes')
-                .get<Dish[]>('app/api/v1/dishes')
-            // .map(response => {
-            //     const dishes = response.json();
-            //     return dishes.map(dish => new Dish(dish));
-            // })
-            // .do(data => console.log('server data:', data)) // debug
-            // .catch(this.handleError)
-        );
+        return this.http.get<Dish[]>('app/api/v1/dishes');
     }
 
     public getDishById(dishId: string): Observable<Dish> {
