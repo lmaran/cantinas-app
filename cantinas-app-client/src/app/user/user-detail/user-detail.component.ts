@@ -2,7 +2,6 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import 'rxjs/add/operator/filter';
 import { ValidationService } from '../../shared/services/validation.service';
 
 import { UserService } from '../../shared/services/user.service';
