@@ -30,10 +30,13 @@ export class UserListComponent implements OnInit {
     }
 
     refreshUserList() {
-        this.userService.getAllUsers().subscribe(users => {
-            this.users = users;
-            // console.log(users);
-        });
+        this.userService.getAllUsers().subscribe(
+            users => {
+                this.users = users;
+                // this.users = Array.from(users).concat([]);
+            } // success path
+            // error => this.error = error // error path
+        );
     }
 
     // toggleUserComplete(user) {
