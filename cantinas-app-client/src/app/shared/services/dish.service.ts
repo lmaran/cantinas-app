@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Dish } from '../interfaces/dish';
 import { Observable, throwError } from 'rxjs';
 // import { map, catchError} from 'rxjs/operators';
-
-const API_URL = environment.apiUrl;
 
 @Injectable()
 export class DishService {

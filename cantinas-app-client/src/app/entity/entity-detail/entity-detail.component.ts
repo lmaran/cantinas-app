@@ -11,6 +11,7 @@ import { Entity } from '../../shared/interfaces/entity';
     selector: 'app-entity-detail',
     templateUrl: './entity-detail.component.html',
     styleUrls: ['./entity-detail.component.scss'],
+    providers: [EntityService],
 })
 export class EntityDetailComponent implements OnInit {
     isEditMode: boolean;

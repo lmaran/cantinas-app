@@ -21,6 +21,8 @@ import { EntityDetailComponent } from './entity/entity-detail/entity-detail.comp
 import { DisplayErrorComponent } from './core/display-error/display-error.component';
 
 import { AppModalComponent } from '../app/shared/components/confirmDelete/confirmDelete.component';
+import { HttpErrorHandler } from '../app/shared/services/http-error-handler.service';
+import { MessageService } from '../app/shared/services/message.service';
 
 @NgModule({
     declarations: [
@@ -44,7 +46,7 @@ import { AppModalComponent } from '../app/shared/components/confirmDelete/confir
         ReactiveFormsModule,
         HttpClientModule,
     ],
-    providers: [AuthenticationService],
+    providers: [AuthenticationService, HttpErrorHandler, MessageService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

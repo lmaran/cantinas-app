@@ -1,11 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../interfaces/user';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-
-const API_URL = environment.apiUrl;
 
 @Injectable()
 export class UserService {

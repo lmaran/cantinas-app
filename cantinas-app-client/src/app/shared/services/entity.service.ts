@@ -2,97 +2,50 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Entity } from '../interfaces/entity';
+
 import { Observable } from 'rxjs';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/catch';
-// import 'rxjs/add/observable/throw';
-// import 'rxjs/add/operator/do'; // for debugging
+import { catchError } from 'rxjs/operators';
 
-const API_URL = environment.apiUrl;
+import { HttpErrorHandler, HandleError } from '../../shared/services/http-error-handler.service';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class EntityService {
-    constructor(private http: HttpClient) {}
+    private entityUrl = 'app/api/v1/entities';
+    private handleError: HandleError;
+
+    constructor(private http: HttpClient, httpErrorHandler: HttpErrorHandler) {
+        this.handleError = httpErrorHandler.createHandleError('EntityService');
+    }
+
+    /*
+        Query methods
+    */
 
     public getAllEntities(): Observable<Entity[]> {
-        return (
-            this.http
-                // .get(API_URL + '/entities')
-                .get<Entity[]>('app/api/v1/entities')
-            // .map(response => {
-            //     const entities = response.json();
-            //     return entities.map(entity => new Entity(entity));
-            // })
-            // .do(data => console.log('server data:', data)) // debug
-            // .catch(this.handleError)
-        );
+        return this.http.get<Entity[]>(this.entityUrl).pipe(catchError(this.handleError('getAllEntities', [])));
     }
 
-    public getEntityById(entityId: string): Observable<Entity> {
-        return (
-            this.http
-                // .get(API_URL + '/entities/' + entityId)
-                .get<Entity>(`app/api/v1/entities/${entityId}`)
-            //   .map(response => {
-            //     return new Entity(response.json());
-            //   })
-            // .do(data => console.log('server data:', data)) // debug
-            // .catch(this.handleError)
-        );
+    public getEntityById(entityId: string): Observable<Entity | string> {
+        return this.http
+            .get<Entity>(`${this.entityUrl}/${entityId}`)
+            .pipe(catchError(this.handleError('getEntityById', entityId)));
     }
+
+    /*
+        Command methods
+    */
 
     public createEntity(entity: Entity): Observable<Entity> {
-        return (
-            this.http
-                // .post(API_URL + '/entities', entity)
-                .post<Entity>('app/api/v1/entities', entity)
-            //   .map(response => {
-            //     return new Entity(response.json());
-            //   })
-            // .catch(this.handleError)
-        );
+        return this.http
+            .post<Entity>(this.entityUrl, entity)
+            .pipe(catchError(this.handleError('createEntity', entity)));
     }
 
     public updateEntity(entity: Entity): Observable<Entity> {
-        return (
-            this.http
-                // .put(API_URL + '/entities/' + entity.id, entity)
-                .put<Entity>(`app/api/v1/entities`, entity)
-            //   .map(response => {
-            //     return new Entity(response.json());
-            //   })
-            // .catch(this.handleError)
-        );
+        return this.http.put<Entity>(this.entityUrl, entity).pipe(catchError(this.handleError('updateEntity', entity)));
     }
 
-    // public deleteEntityById(entityId: string): Observable<HttpResponse<number>> {
-    //     console.log(entityId);
-    //     return (
-    //         this.http
-    //             // .delete(API_URL + '/entities/' + entityId)
-    //             .delete(`app/api/v1/entities/${entityId}`)
-    //             .map((response: HttpResponse<number>) => response.status)
-    //             .catch(this.handleError)
-    //     );
-    // }
-
-    // public deleteEntityById(entityId: string): Observable<HttpResponse<number>> {
     public deleteEntityById(entityId: string): Observable<{}> {
-        const uri = `app/api/v1/entities/${entityId}`;
-        return (
-            this.http
-                // .delete(API_URL + '/entities/' + entityId)
-                // tell HttpClient that we want the full response https://stackoverflow.com/a/46809000/2726725
-                .delete(uri, { observe: 'response' })
-            // .map((response: HttpResponse<number>) => response.status)
-            // .catch(this.handleError)
-        );
+        return this.http.delete(`${this.entityUrl}/${entityId}`).pipe(catchError(this.handleError('deleteEntityById')));
     }
-
-    // private handleError(error: Response | any) {
-    //     console.error('ApiService::handleError', error);
-    //     return Observable.throw(error);
-    // }
 }
