@@ -20,9 +20,12 @@ import { EntityDetailComponent } from './entity/entity-detail/entity-detail.comp
 
 import { DisplayErrorComponent } from './core/display-error/display-error.component';
 
-import { AppModalComponent } from '../app/shared/components/confirmDelete/confirmDelete.component';
-import { HttpErrorHandler } from '../app/shared/services/http-error-handler.service';
-import { MessageService } from '../app/shared/services/message.service';
+import { AppModalComponent } from './shared/components/confirmDelete/confirmDelete.component';
+import { HttpErrorHandler } from './shared/services/http-error-handler.service';
+import { MessageService } from './shared/services/message.service';
+
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './entity/entity.reducer';
 
 @NgModule({
     declarations: [
@@ -45,6 +48,9 @@ import { MessageService } from '../app/shared/services/message.service';
         AppRoutingModule,
         ReactiveFormsModule,
         HttpClientModule,
+        StoreModule.forRoot({
+            entity: reducer,
+        }),
     ],
     providers: [AuthenticationService, HttpErrorHandler, MessageService],
     bootstrap: [AppComponent],

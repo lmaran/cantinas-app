@@ -7,6 +7,11 @@ import { ValidationService } from '../../shared/services/validation.service';
 import { EntityService } from '../../shared/services/entity.service';
 import { Entity } from '../../shared/interfaces/entity';
 
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
+import * as EntityActions from '../entity.actions';
+import { Observable } from 'rxjs';
+
 @Component({
     selector: 'app-entity-detail',
     templateUrl: './entity-detail.component.html',
@@ -21,17 +26,9 @@ export class EntityDetailComponent implements OnInit {
     title: string;
     private formSubmitAttempt: boolean;
     categoryList: any;
-    // categoryList: [
-    //     { label: '' },
-    //     { value: '1'; label: 'Supa' },
-    //     { value: '2'; label: 'Felul doi' },
-    //     { value: '3'; label: 'Salata' },
-    //     { value: '4'; label: 'Desert' }
-    // ];
-
-    // firstName = new FormControl('', Validators.required);
 
     constructor(
+        private store: Store<AppState>,
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
@@ -91,9 +88,9 @@ export class EntityDetailComponent implements OnInit {
     onSubmit() {
         this.formSubmitAttempt = true;
 
-        if (this.entityForm.invalid) {
-            return;
-        }
+        // if (this.entityForm.invalid) {
+        //     return;
+        // }
 
         const entity = this.entityForm.value;
         this.submitted = true;
@@ -105,9 +102,11 @@ export class EntityDetailComponent implements OnInit {
                 this.router.navigate(['/entities']);
             });
         } else {
-            this.entityService.createEntity(entity).subscribe(saved => {
-                // this.router.navigate(['/entities']);
-            });
+            // this.entityService.createEntity(entity).subscribe(saved => {
+            //     // this.router.navigate(['/entities']);
+            // });
+
+            this.store.dispatch(new EntityActions.AddEntity(entity));
         }
     }
 
