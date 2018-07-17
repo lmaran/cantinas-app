@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 
 import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EntityService {
     private entityUrl = 'app/api/v1/entities';
     private handleError: HandleError;

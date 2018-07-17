@@ -53,7 +53,7 @@ import { EntityEffects } from './entity/entity.effects';
         StoreModule.forRoot({
             entity: reducer,
         }),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot([EntityEffects]),
     ],
     providers: [AuthenticationService, HttpErrorHandler, MessageService],
     bootstrap: [AppComponent],
