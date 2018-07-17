@@ -23,7 +23,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let entity of entities | async">
+        <tr *ngFor="let entity of entities$ | async">
 
             <td width="60" style="padding:2px 2px 2px 5px">
                 <a href *ngIf="entity.image">

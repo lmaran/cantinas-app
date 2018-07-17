@@ -5,7 +5,7 @@ import { AppModalComponent } from '../../shared/components/confirmDelete/confirm
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import * as EntityActions from '../entity.actions';
 
@@ -19,7 +19,7 @@ export class EntityListComponent implements OnInit {
     newEntity: Entity = new Entity();
 
     // entities: Entity[] = [];
-    entities: Observable<Entity[]>;
+    entities$: Observable<Entity[]>;
 
     deleteModal = false;
     selectedEntity: Entity = new Entity();
@@ -31,20 +31,38 @@ export class EntityListComponent implements OnInit {
     // Don't forget to add this (child) component in the current html
     @ViewChild(AppModalComponent) modal: AppModalComponent;
 
-    constructor(private store: Store<AppState>, private entityService: EntityService) {
-        this.entities = store.select('entity');
-    }
+    constructor(private store: Store<AppState>, private entityService: EntityService) {}
 
     ngOnInit() {
-        // this.categoryList = [
-        //     { label: '' },
-        //     { value: '1', label: 'Supa' },
-        //     { value: '2', label: 'Felul doi' },
-        //     { value: '3', label: 'Salata' },
-        //     { value: '4', label: 'Desert' },
-        // ];
-        // this.title = 'Entitati';
-        // this.getEntityList();
+        // this.entities = this.store.select('entity');
+
+        // Do NOT subscribe here because it uses an async pipe
+        // This gets the initial values until the load is complete.
+        this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
+
+        // // Do NOT subscribe here because it used an async pipe
+        // // this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
+
+        this.store.dispatch(new EntityActions.Load());
+
+        // // Subscribe here because it does not use an async pipe
+        // this.store
+        //     .pipe(
+        //         select(fromProduct.getCurrentProduct),
+        //         takeWhile(() => this.componentActive)
+        //     )
+        //     .subscribe(currentProduct => (this.selectedProduct = currentProduct));
+
+        // // Subscribe here because it does not use an async pipe
+        // this.store
+        //     .pipe(
+        //         select(fromProduct.getShowProductCode),
+        //         takeWhile(() => this.componentActive)
+        //     )
+        //     .subscribe(showProductCode => (this.displayCode = showProductCode));
+
+        // this.store
+        //     .subscribe(showProductCode => (this.displayCode = showProductCode));
     }
 
     // refreshEntityList() {

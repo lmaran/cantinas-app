@@ -25,7 +25,9 @@ import { HttpErrorHandler } from './shared/services/http-error-handler.service';
 import { MessageService } from './shared/services/message.service';
 
 import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './entity/entity.reducer';
+import { EntityEffects } from './entity/entity.effects';
 
 @NgModule({
     declarations: [
@@ -51,6 +53,7 @@ import { reducer } from './entity/entity.reducer';
         StoreModule.forRoot({
             entity: reducer,
         }),
+        EffectsModule.forRoot([]),
     ],
     providers: [AuthenticationService, HttpErrorHandler, MessageService],
     bootstrap: [AppComponent],

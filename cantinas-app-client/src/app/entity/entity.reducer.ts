@@ -9,11 +9,16 @@ const initialState: Entity = {
     url: 'http://google.com',
 };
 
+// const initialState: Entity = null;
+
 export function reducer(state: Entity[] = [initialState], action: EntityActions.Actions) {
     switch (action.type) {
+        case EntityActions.LOAD_SUCCESS:
+            return action.payload;
+
         case EntityActions.ADD_ENTITY:
             return [...state, action.payload];
-        // Add this case:
+
         case EntityActions.REMOVE_ENTITY:
             // state.splice(action.payload, 1);
 
