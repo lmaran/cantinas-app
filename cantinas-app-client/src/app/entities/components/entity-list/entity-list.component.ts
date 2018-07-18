@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Entity } from '../../models/entity.model';
 import { EntityService } from '../../services/entity.service';
-import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
+// import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
@@ -29,7 +29,7 @@ export class EntityListComponent implements OnInit {
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     // Don't forget to add this (child) component in the current html
-    @ViewChild(AppModalComponent) modal: AppModalComponent;
+    // @ViewChild(AppModalComponent) modal: AppModalComponent;
 
     constructor(private store: Store<AppState>, private entityService: EntityService) {}
 

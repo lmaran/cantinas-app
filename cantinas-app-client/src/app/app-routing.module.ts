@@ -24,9 +24,14 @@ const routes: Routes = [
     { path: 'dishes/add', component: DishDetailComponent },
     { path: 'dishes/:id', component: DishDetailComponent },
 
-    { path: 'entities', component: EntityListComponent },
-    { path: 'entities/add', component: EntityDetailComponent },
-    { path: 'entities/:id', component: EntityDetailComponent },
+    // { path: 'entities', component: EntityListComponent },
+    // { path: 'entities/add', component: EntityDetailComponent },
+    // { path: 'entities/:id', component: EntityDetailComponent },
+    {
+        path: 'entities',
+        // canActivate: [AuthGuard],
+        loadChildren: './entities/entity.module#EntityModule',
+    },
 
     // { path: '**', component: NotFound }
 ];
