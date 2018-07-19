@@ -1,4 +1,4 @@
-import { Entity } from './shared2/interfaces/entity';
+import { Entity } from './shared/models/entity';
 
 export interface AppState {
     readonly entity: Entity[];

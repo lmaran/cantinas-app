@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Dish } from '../../shared2/interfaces/dish';
-import { DishService } from '../../shared2/services/dish.service';
-import { AppModalComponent } from '../../shared2/components/confirmDelete/confirmDelete.component';
+import { Dish } from '../../shared/models/dish';
+import { DishService } from '../../shared/services/dish.service';
+import { AppModalComponent } from '../../shared/components/confirmDelete/confirmDelete.component';
 
 @Component({
     selector: 'app-dish-list',

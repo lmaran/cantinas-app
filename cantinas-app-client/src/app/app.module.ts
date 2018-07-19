@@ -16,16 +16,12 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { DishListComponent } from './dish/dish-list/dish-list.component';
 import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
 
-import { DisplayErrorComponent } from './shared2/components/display-error/display-error.component';
-
-import { AppModalComponent } from './shared2/components/confirmDelete/confirmDelete.component';
-import { HttpErrorHandler } from './shared2/services/http-error-handler.service';
-import { MessageService } from './shared2/services/message.service';
-
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './entity/state/entity.reducer';
 import { EntityEffects } from './entity/state/entity.effects';
+
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
@@ -36,8 +32,6 @@ import { EntityEffects } from './entity/state/entity.effects';
         UserDetailComponent,
         DishListComponent,
         DishDetailComponent,
-        DisplayErrorComponent,
-        AppModalComponent,
     ],
     imports: [
         BrowserAnimationsModule,
@@ -50,8 +44,9 @@ import { EntityEffects } from './entity/state/entity.effects';
             entity: reducer,
         }),
         EffectsModule.forRoot([EntityEffects]),
+        SharedModule,
     ],
-    providers: [AuthenticationService, HttpErrorHandler, MessageService],
+    providers: [AuthenticationService],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

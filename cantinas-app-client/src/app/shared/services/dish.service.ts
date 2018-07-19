@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Dish } from '../interfaces/dish';
+import { Dish } from '../models/dish';
 import { Observable, throwError } from 'rxjs';
 // import { map, catchError} from 'rxjs/operators';
 
