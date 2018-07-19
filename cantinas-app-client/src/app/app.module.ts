@@ -15,8 +15,6 @@ import { UserListComponent } from './user/user-list/user-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { DishListComponent } from './dish/dish-list/dish-list.component';
 import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
-import { EntityListComponent } from './entity/entity-list/entity-list.component';
-import { EntityDetailComponent } from './entity/entity-detail/entity-detail.component';
 
 import { DisplayErrorComponent } from './core/display-error/display-error.component';
 
@@ -26,8 +24,8 @@ import { MessageService } from './shared/services/message.service';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './entity/entity.reducer';
-import { EntityEffects } from './entity/entity.effects';
+import { reducer } from './entity/state/entity.reducer';
+import { EntityEffects } from './entity/state/entity.effects';
 
 @NgModule({
     declarations: [
@@ -40,8 +38,6 @@ import { EntityEffects } from './entity/entity.effects';
         DishDetailComponent,
         DisplayErrorComponent,
         AppModalComponent,
-        EntityListComponent,
-        EntityDetailComponent,
     ],
     imports: [
         BrowserAnimationsModule,

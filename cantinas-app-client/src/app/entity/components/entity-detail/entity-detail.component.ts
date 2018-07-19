@@ -2,21 +2,21 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ValidationService } from '../../shared/services/validation.service';
+// import { ValidationService } from '../../shared/services/validation.service';
 
-import { EntityService } from '../../shared/services/entity.service';
-import { Entity } from '../../shared/interfaces/entity';
+// import { EntityService } from '../../shared/services/entity.service';
+import { Entity } from '../../models/entity.model';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
-import * as EntityActions from '../entity.actions';
+import { AppState } from '../../models/app-state.model';
+import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-entity-detail',
     templateUrl: './entity-detail.component.html',
     styleUrls: ['./entity-detail.component.scss'],
-    providers: [EntityService],
+    // providers: [EntityService],
 })
 export class EntityDetailComponent implements OnInit {
     isEditMode: boolean;
@@ -32,7 +32,7 @@ export class EntityDetailComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
-        private entityService: EntityService,
+        // private entityService: EntityService,
         private location: Location,
         public renderer2: Renderer2
     ) {
@@ -98,9 +98,9 @@ export class EntityDetailComponent implements OnInit {
         if (this.isEditMode) {
             entity._id = this.entity._id;
 
-            this.entityService.updateEntity(entity).subscribe(saved => {
-                this.router.navigate(['/entities']);
-            });
+            // this.entityService.updateEntity(entity).subscribe(saved => {
+            //     this.router.navigate(['/entities']);
+            // });
         } else {
             // this.entityService.createEntity(entity).subscribe(saved => {
             //     // this.router.navigate(['/entities']);
@@ -140,15 +140,15 @@ export class EntityDetailComponent implements OnInit {
                 this.isEditMode = true;
                 this.title = 'Editeaza entitate';
 
-                this.entityService.getEntityById(id.toString()).subscribe((entity: any) => {
-                    this.entity = entity;
-                    this.entityForm.reset({
-                        displayName: entity.displayName,
-                        pluralName: entity.pluralName,
-                        uniqueName: entity.uniqueName,
-                        description: entity.description,
-                    });
-                });
+                // this.entityService.getEntityById(id.toString()).subscribe((entity: any) => {
+                //     this.entity = entity;
+                //     this.entityForm.reset({
+                //         displayName: entity.displayName,
+                //         pluralName: entity.pluralName,
+                //         uniqueName: entity.uniqueName,
+                //         description: entity.description,
+                //     });
+                // });
             } else {
                 this.title = 'Adauga entitate';
             }

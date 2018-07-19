@@ -6,7 +6,7 @@ import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../../models/appState.model';
+import { AppState } from '../../models/app-state.model';
 import * as EntityActions from '../../state/entity.actions';
 
 @Component({
