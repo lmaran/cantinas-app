@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Entity } from '../../models/entity.model';
-import { EntityService } from '../../services/entity.service';
+import { Entity } from '../../../core/models/entity';
+import { EntityService } from '../../../core/services/entity.service';
 import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../../models/app-state.model';
+import { AppState } from '../../../core/models/app-state';
 import * as EntityActions from '../../state/entity.actions';
 
 @Component({

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Entity } from '../models/entity.model';
+import { Entity } from '../models/entity';
 
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { HttpErrorHandler, HandleError } from '../../shared/services/http-error-handler.service';
+import { HttpErrorHandler, HandleError } from './http-error-handler.service';
 
 @Injectable({ providedIn: 'root' })
 export class EntityService {

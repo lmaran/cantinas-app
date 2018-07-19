@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Entity } from '../models/entity.model';
+import { Entity } from '../../core/models/entity';
 import * as EntityActions from './entity.actions';
 
 const initialState: Entity = {

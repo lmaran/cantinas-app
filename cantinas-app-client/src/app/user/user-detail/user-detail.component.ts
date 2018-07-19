@@ -2,10 +2,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ValidationService } from '../../shared/services/validation.service';
+import { ValidationService } from '../../core/services/validation.service';
 
-import { UserService } from '../../shared/services/user.service';
-import { User } from '../../shared/models/user';
+import { UserService } from '../../core/services/user.service';
+import { User } from '../../core/models/user';
 
 @Component({
     selector: 'app-user-detail',

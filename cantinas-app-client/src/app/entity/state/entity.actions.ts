@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
-import { Entity } from '../models/entity.model';
+import { Entity } from '../../core/models/entity';
 
 export const ADD_ENTITY = '[ENTITY] Add';
 export const REMOVE_ENTITY = '[ENTITY] Remove';

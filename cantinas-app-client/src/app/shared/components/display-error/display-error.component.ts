@@ -1,7 +1,7 @@
 // https://coryrylan.com/blog/angular-form-builder-and-validation-management
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ValidationService } from '../../services/validation.service';
+import { ValidationService } from '../../../core/services/validation.service';
 
 @Component({
     selector: 'app-display-error',

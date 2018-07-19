@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Dish } from '../../shared/models/dish';
-import { DishService } from '../../shared/services/dish.service';
+import { Dish } from '../../core/models/dish';
+import { DishService } from '../../core/services/dish.service';
 import { AppModalComponent } from '../../shared/components/confirmDelete/confirmDelete.component';
 
 @Component({

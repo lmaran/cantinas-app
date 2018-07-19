@@ -5,10 +5,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 // import { ValidationService } from '../../shared2/services/validation.service';
 
 // import { EntityService } from '../../shared2/services/entity.service';
-import { Entity } from '../../models/entity.model';
+import { Entity } from '../../../core/models/entity';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../../models/app-state.model';
+import { AppState } from '../../../core/models/app-state';
 import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 

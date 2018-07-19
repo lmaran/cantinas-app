@@ -2,10 +2,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ValidationService } from '../../shared/services/validation.service';
+import { ValidationService } from '../../core/services/validation.service';
 
-import { DishService } from '../../shared/services/dish.service';
-import { Dish } from '../../shared/models/dish';
+import { DishService } from '../../core/services/dish.service';
+import { Dish } from '../../core/models/dish';
 
 @Component({
     selector: 'app-dish-detail',

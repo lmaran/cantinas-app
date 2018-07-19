@@ -21,6 +21,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { reducer } from './entity/state/entity.reducer';
 import { EntityEffects } from './entity/state/entity.effects';
 
+import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -44,6 +45,7 @@ import { SharedModule } from './shared/shared.module';
             entity: reducer,
         }),
         EffectsModule.forRoot([EntityEffects]),
+        CoreModule.forRoot(), // forRoot => singleton
         SharedModule,
     ],
     providers: [AuthenticationService],
