@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication.service';
-import { routerTransition } from './core/router.animations';
+import { routerTransition } from './router.animations';
 
 @Component({
     selector: 'app-root',

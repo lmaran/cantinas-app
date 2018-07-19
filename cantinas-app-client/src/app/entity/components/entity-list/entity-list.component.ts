@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Entity } from '../../models/entity.model';
 import { EntityService } from '../../services/entity.service';
-// import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
+// import { AppModalComponent } from '../../../shared2/components/confirmDelete/confirmDelete.component';
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';

@@ -6,7 +6,7 @@ import { Entity } from '../models/entity.model';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { HttpErrorHandler, HandleError } from '../../shared/services/http-error-handler.service';
+import { HttpErrorHandler, HandleError } from '../../shared2/services/http-error-handler.service';
 
 @Injectable({ providedIn: 'root' })
 export class EntityService {

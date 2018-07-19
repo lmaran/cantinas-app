@@ -16,11 +16,11 @@ import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { DishListComponent } from './dish/dish-list/dish-list.component';
 import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
 
-import { DisplayErrorComponent } from './core/display-error/display-error.component';
+import { DisplayErrorComponent } from './shared2/components/display-error/display-error.component';
 
-import { AppModalComponent } from './shared/components/confirmDelete/confirmDelete.component';
-import { HttpErrorHandler } from './shared/services/http-error-handler.service';
-import { MessageService } from './shared/services/message.service';
+import { AppModalComponent } from './shared2/components/confirmDelete/confirmDelete.component';
+import { HttpErrorHandler } from './shared2/services/http-error-handler.service';
+import { MessageService } from './shared2/services/message.service';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';

@@ -2,9 +2,9 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-// import { ValidationService } from '../../shared/services/validation.service';
+// import { ValidationService } from '../../shared2/services/validation.service';
 
-// import { EntityService } from '../../shared/services/entity.service';
+// import { EntityService } from '../../shared2/services/entity.service';
 import { Entity } from '../../models/entity.model';
 
 import { Store } from '@ngrx/store';
