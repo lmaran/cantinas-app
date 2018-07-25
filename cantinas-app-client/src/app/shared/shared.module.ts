@@ -8,6 +8,7 @@
 // modules
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
 
 // components
@@ -17,9 +18,12 @@ import { MessagesComponent } from './components/messages/messages.component';
 
 // directives, pipes
 
+export const MODULES = [CommonModule, ReactiveFormsModule, ClarityModule];
+export const COMPONENTS = [AppModalComponent, DisplayErrorComponent, MessagesComponent];
+
 @NgModule({
-    imports: [CommonModule, ClarityModule],
-    declarations: [AppModalComponent, DisplayErrorComponent, MessagesComponent],
-    exports: [CommonModule, AppModalComponent, DisplayErrorComponent, MessagesComponent],
+    imports: [...MODULES],
+    declarations: [...COMPONENTS],
+    exports: [...MODULES, ...COMPONENTS],
 })
 export class SharedModule {}

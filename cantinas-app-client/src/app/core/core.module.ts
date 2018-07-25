@@ -2,8 +2,10 @@
 // Import CoreModule in the root AppModule only. Never import CoreModule in any other module.
 // Consider making CoreModule a pure services module with no declarations.
 
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 // services
 import { HttpErrorHandler } from './services/http-error-handler.service';
@@ -14,7 +16,7 @@ import { ValidationService } from './services/validation.service';
 import { EntityService } from './services/entity.service';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
     declarations: [],
 })
 export class CoreModule {
