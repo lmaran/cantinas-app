@@ -14,6 +14,7 @@ import { DishService } from './services/dish.service';
 import { UserService } from './services/user.service';
 import { ValidationService } from './services/validation.service';
 import { EntityService } from './services/entity.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @NgModule({
     imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule],
@@ -24,7 +25,15 @@ export class CoreModule {
     static forRoot(): ModuleWithProviders {
         return {
             ngModule: CoreModule,
-            providers: [HttpErrorHandler, MessageService, DishService, UserService, ValidationService, EntityService],
+            providers: [
+                HttpErrorHandler,
+                MessageService,
+                DishService,
+                UserService,
+                ValidationService,
+                EntityService,
+                AuthenticationService,
+            ],
         };
     }
 }
