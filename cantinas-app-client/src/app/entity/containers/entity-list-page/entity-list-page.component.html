@@ -1,0 +1,13 @@
+<h1>{{title}}</h1>
+
+<button class="btn btn-primary" [routerLink]="['/entities/add']">
+    <clr-icon shape="plus"></clr-icon>
+    Adauga entitate
+</button>
+
+<button type="button" [clrLoading]="refreshBtnState" class="btn btn-icon" (click)="refreshEntityList()">
+    <clr-icon shape="refresh"></clr-icon>
+    Refresh
+</button>
+
+<app-entity-list [entities]="entities$ | async" (delete)="deleteEntity($event)"></app-entity-list>
