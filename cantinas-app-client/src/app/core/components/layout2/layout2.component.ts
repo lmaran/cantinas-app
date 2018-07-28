@@ -16,7 +16,7 @@
 
 import { Component, OnInit } from '@angular/core';
 // import { AuthenticationService } from './core/services/authentication.service';
-import { routerTransition } from '../router.animations';
+import { routerTransition } from '../../router.animations';
 
 @Component({
     // tslint:disable-next-line:component-selector

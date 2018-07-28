@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about/about.component';
-import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './core/components/about/about.component';
+import { HomeComponent } from './core/components/home/home.component';
 import { UserListComponent } from './user/user-list/user-list.component';
 import { UserDetailComponent } from './user/user-detail/user-detail.component';
 import { DishListComponent } from './dish/dish-list/dish-list.component';
