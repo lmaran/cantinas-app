@@ -1,32 +1,48 @@
 import { Action } from '@ngrx/store';
 import { Entity } from '../../core/models/entity';
-import * as EntityActions from './entity.actions';
+import { EntityActionTypes, EntityActions } from './entity.actions';
 
-const initialState: Entity = {
-    _id: '123',
-    name: 'asd',
-    displayName: 'Initial Tutorial',
-    url: 'http://google.com',
+// State for this feature (Entity)
+export interface EntityState {
+    // showProductCode: boolean;
+    currentEntityId: string | null;
+    entities: Entity[];
+    error: string;
+}
+
+const initialState: EntityState = {
+    // showProductCode: true,
+    currentEntityId: null,
+    entities: [],
+    error: '',
 };
 
 // const initialState: Entity = null;
 
-export function reducer(state: Entity[] = [initialState], action: EntityActions.Actions) {
+export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {
-        case EntityActions.LOAD_SUCCESS:
-            return action.payload;
+        case EntityActionTypes.LOAD_SUCCESS:
+            // console.log({
+            //     ...state,
+            //     entities: action.payload,
+            //     error: '',
+            // });
 
-        case EntityActions.ADD_ENTITY:
-            return [...state, action.payload];
+            return {
+                ...state,
+                entities: action.payload,
+                error: '',
+            };
 
-        case EntityActions.REMOVE_ENTITY:
-            // state.splice(action.payload, 1);
+        // case EntityActions.ADD_ENTITY:
+        //     return [...state, action.payload];
 
-            console.log(state);
-            console.log('Id:' + action.payload);
+        case EntityActionTypes.DELETE:
+            const yyy = action.payload;
 
-            const newState = state.filter(x => x._id !== action.payload);
-            console.log(newState);
+            const newState = state;
+            // const newState = state.filter(x => x._id !== action.payload);
+
             return newState;
         default:
             return state;

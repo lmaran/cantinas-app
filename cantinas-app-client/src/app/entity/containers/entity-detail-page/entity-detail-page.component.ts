@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, Input } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -7,24 +7,24 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 // import { EntityService } from '../../shared2/services/entity.service';
 import { Entity } from '../../../core/models/entity';
 
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../core/models/app-state';
 import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 
 @Component({
-    selector: 'app-entity-detail',
-    templateUrl: './entity-detail.component.html',
-    styleUrls: ['./entity-detail.component.scss'],
+    selector: 'app-entity-detail-page',
+    templateUrl: './entity-detail-page.component.html',
+    styleUrls: ['./entity-detail-page.component.scss'],
     // providers: [EntityService],
 })
-export class EntityDetailComponent implements OnInit {
-    @Input() entity: Entity;
+export class EntityDetailPageComponent implements OnInit {
+    entity$: Observable<Entity>;
 
     isEditMode: boolean;
     submitted: boolean;
     entityForm: FormGroup;
-    // entity: Entity;
+
     title: string;
     private formSubmitAttempt: boolean;
     categoryList: any;
@@ -38,7 +38,7 @@ export class EntityDetailComponent implements OnInit {
         private location: Location,
         public renderer2: Renderer2
     ) {
-        this.createForm();
+        // this.createForm();
     }
 
     createForm() {
@@ -98,11 +98,12 @@ export class EntityDetailComponent implements OnInit {
         this.submitted = true;
 
         if (this.isEditMode) {
-            entity._id = this.entity._id;
+            // entity._id = this.entity._id;
 
             // this.entityService.updateEntity(entity).subscribe(saved => {
             //     this.router.navigate(['/entities']);
             // });
+            this.store.dispatch(new EntityActions.UpdateEntitySuccess(entity));
         } else {
             // this.entityService.createEntity(entity).subscribe(saved => {
             //     // this.router.navigate(['/entities']);
@@ -150,6 +151,9 @@ export class EntityDetailComponent implements OnInit {
                 //         description: entity.description,
                 //     });
                 // });
+
+                // this.entity$ = this.store.select(fromEn.getCurrentContact);
+                // this.entity$ = this.store.pipe(select('entity')) as Observable<Entity>;
             } else {
                 this.title = 'Adauga entitate';
             }

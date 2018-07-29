@@ -8,6 +8,7 @@ import { EntityService } from '../../core/services/entity.service';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as entityActions from './entity.actions';
+import { Entity } from '../../core/models/entity';
 
 @Injectable()
 export class EntityEffects {
@@ -15,11 +16,23 @@ export class EntityEffects {
 
     @Effect()
     loadEntities$: Observable<Action> = this.actions$.pipe(
-        ofType(entityActions.LOAD),
+        ofType(entityActions.EntityActionTypes.LOAD),
         mergeMap(action =>
             this.entityService.getAllEntities().pipe(
                 map(entities => new entityActions.LoadSuccess(entities)),
                 catchError(err => of(new entityActions.LoadFail(err)))
+            )
+        )
+    );
+
+    @Effect()
+    updateEntity$: Observable<Action> = this.actions$.pipe(
+        ofType(entityActions.EntityActionTypes.UPDATE),
+        map((action: entityActions.UpdateEntity) => action.payload),
+        mergeMap((entity: Entity) =>
+            this.entityService.updateEntity(entity).pipe(
+                map(updatedEntity => new entityActions.UpdateEntitySuccess(updatedEntity)),
+                catchError(err => of(new entityActions.UpdateEntityFail(err)))
             )
         )
     );

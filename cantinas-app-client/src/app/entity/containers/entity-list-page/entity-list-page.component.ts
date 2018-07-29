@@ -30,7 +30,9 @@ export class EntityListPageComponent implements OnInit {
     ngOnInit() {
         // Do NOT subscribe here because it uses an async pipe
         // This gets the initial values until the load is complete.
-        this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
+        // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
+        this.entities$ = this.store.select(state => state.entity.entities) as Observable<Entity[]>;
+        // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
 
         // // Do NOT subscribe here because it used an async pipe
         // // this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
@@ -79,6 +81,6 @@ export class EntityListPageComponent implements OnInit {
     // }
 
     deleteEntity = function(entity) {
-        this.store.dispatch(new EntityActions.RemoveEntity(entity._id));
+        this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
     };
 }
