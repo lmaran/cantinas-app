@@ -13,7 +13,7 @@ import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
 
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './entity/state/entity.reducer';
+// import { reducer } from './entity/state/entity.reducer';
 import { EntityEffects } from './entity/state/entity.effects';
 
 import { CoreModule } from './core/core.module';
@@ -37,9 +37,10 @@ import { SharedModule } from './shared/shared.module';
     ],
     imports: [
         AppRoutingModule,
-        StoreModule.forRoot({
-            entity: reducer,
-        }),
+        // StoreModule.forRoot({
+        //     entity: reducer,
+        // }),
+        StoreModule.forRoot({}),
         EffectsModule.forRoot([EntityEffects]),
         CoreModule.forRoot(), // forRoot => singleton
         SharedModule,
