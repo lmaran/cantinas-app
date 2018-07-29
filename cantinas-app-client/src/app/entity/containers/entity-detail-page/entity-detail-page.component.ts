@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Entity } from '../../../core/models/entity';
 
 import { Store } from '@ngrx/store';
-import { ExtendedAppState } from '../../state/entity-state.interfaces';
+import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 

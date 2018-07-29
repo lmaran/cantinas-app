@@ -6,7 +6,8 @@ import { ClrLoadingState } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
-import { ExtendedAppState } from '../../state/entity-state.interfaces';
+import * as EntitySelectors from '../../state/entity.selectors';
+import { ExtendedAppState } from '../../state/entity.interfaces';
 
 @Component({
     selector: 'app-entity-list-page',
@@ -32,8 +33,10 @@ export class EntityListPageComponent implements OnInit {
         // Do NOT subscribe here because it uses an async pipe
         // This gets the initial values until the load is complete.
         // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
-
-        this.entities$ = this.store.select(state => state.entity.entities) as Observable<Entity[]>;
+        // ok, without selectors
+        // this.entities$ = this.store.select(state => state.entity.entities) as Observable<Entity[]>;
+        // with selectors
+        this.entities$ = this.store.select(EntitySelectors.getEntities);
 
         this.store.dispatch(new EntityActions.Load());
         // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;

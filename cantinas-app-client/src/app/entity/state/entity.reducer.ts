@@ -1,5 +1,5 @@
 import { EntityActionTypes, EntityActions } from './entity.actions';
-import { EntityState } from './entity-state.interfaces';
+import { EntityState } from './entity.interfaces';
 
 const initialState: EntityState = {
     currentEntityId: null,
