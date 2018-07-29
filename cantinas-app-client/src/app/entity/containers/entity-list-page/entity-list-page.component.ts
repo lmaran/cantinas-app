@@ -5,8 +5,8 @@ import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../core/models/app-state';
 import * as EntityActions from '../../state/entity.actions';
+import { State } from '../../state/entity.reducer';
 
 @Component({
     selector: 'app-entity-list-page',
@@ -26,18 +26,20 @@ export class EntityListPageComponent implements OnInit {
 
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
-    constructor(private store: Store<AppState>, private entityService: EntityService) {}
+    constructor(private store: Store<State>) {}
 
     ngOnInit() {
         // Do NOT subscribe here because it uses an async pipe
         // This gets the initial values until the load is complete.
         // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
+
         this.entities$ = this.store.select(state => state.entity.entities) as Observable<Entity[]>;
+
+        this.store.dispatch(new EntityActions.Load());
         // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
 
         // // Do NOT subscribe here because it used an async pipe
         // // this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-        this.store.dispatch(new EntityActions.Load());
 
         // // Subscribe here because it does not use an async pipe
         // this.store

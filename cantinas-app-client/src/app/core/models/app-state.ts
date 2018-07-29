@@ -1,6 +1,2 @@
-import { Entity } from './entity';
-import { EntityState } from '../../entity/state/entity.reducer';
-
-export interface AppState {
-    readonly entity: EntityState;
-}
+// tslint:disable-next-line:no-empty-interface
+export interface State {}

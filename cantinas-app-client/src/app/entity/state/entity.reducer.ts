@@ -1,6 +1,11 @@
 import { Action } from '@ngrx/store';
 import { Entity } from '../../core/models/entity';
 import { EntityActionTypes, EntityActions } from './entity.actions';
+import { State } from '../../core/models/app-state';
+
+export interface State extends State {
+    entity: EntityState;
+}
 
 // State for this feature (Entity)
 export interface EntityState {
@@ -22,12 +27,6 @@ const initialState: EntityState = {
 export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {
         case EntityActionTypes.LOAD_SUCCESS:
-            // console.log({
-            //     ...state,
-            //     entities: action.payload,
-            //     error: '',
-            // });
-
             return {
                 ...state,
                 entities: action.payload,

@@ -8,7 +8,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Entity } from '../../../core/models/entity';
 
 import { Store } from '@ngrx/store';
-import { AppState } from '../../../core/models/app-state';
+import { State } from '../../../core/models/app-state';
 import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 
@@ -30,7 +30,7 @@ export class EntityDetailComponent implements OnInit {
     categoryList: any;
 
     constructor(
-        private store: Store<AppState>,
+        private store: Store<State>,
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
