@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { EntityState } from './entity.interfaces';
 
-// Selector functions
+// get a slice of state (in this case, only the entity related state)
 const getEntityFeatureState = createFeatureSelector<EntityState>('entity');
 
 // export const getShowProductCode = createSelector(
@@ -32,6 +32,14 @@ const getEntityFeatureState = createFeatureSelector<EntityState>('entity');
 //     }
 // );
 
+// here 'state' is the result of first argument
 export const getEntities = createSelector(getEntityFeatureState, state => state.entities);
+
+export const getCurrentEntityId = createSelector(getEntityFeatureState, state => state.currentEntityId);
+
+// 'state' and 'currentEntityIs' are the result of first two arguments
+export const getCurrentEntity = createSelector(getEntityFeatureState, getCurrentEntityId, (state, currentEntityId) =>
+    state.entities.find(p => p._id === currentEntityId)
+);
 
 export const getError = createSelector(getEntityFeatureState, state => state.error);
