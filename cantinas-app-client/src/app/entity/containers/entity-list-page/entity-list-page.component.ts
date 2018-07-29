@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
 import { EntityService } from '../../../core/services/entity.service';
 import { ClrLoadingState } from '@clr/angular';
@@ -13,6 +13,7 @@ import * as EntityActions from '../../state/entity.actions';
     templateUrl: './entity-list-page.component.html',
     styleUrls: ['./entity-list-page.component.scss'],
     providers: [EntityService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityListPageComponent implements OnInit {
     newEntity: Entity = new Entity();
