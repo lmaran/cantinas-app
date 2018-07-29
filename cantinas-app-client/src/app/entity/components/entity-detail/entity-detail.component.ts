@@ -2,21 +2,13 @@ import { Component, OnInit, Renderer2, Input } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-// import { ValidationService } from '../../shared2/services/validation.service';
 
-// import { EntityService } from '../../shared2/services/entity.service';
 import { Entity } from '../../../core/models/entity';
-
-import { Store } from '@ngrx/store';
-import { State } from '../../../core/models/app-state';
-import * as EntityActions from '../../state/entity.actions';
-import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-entity-detail',
     templateUrl: './entity-detail.component.html',
     styleUrls: ['./entity-detail.component.scss'],
-    // providers: [EntityService],
 })
 export class EntityDetailComponent implements OnInit {
     @Input() entity: Entity;
@@ -24,13 +16,12 @@ export class EntityDetailComponent implements OnInit {
     isEditMode: boolean;
     submitted: boolean;
     entityForm: FormGroup;
-    // entity: Entity;
     title: string;
     private formSubmitAttempt: boolean;
     categoryList: any;
 
     constructor(
-        private store: Store<State>,
+        // private store: Store<State>,
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,

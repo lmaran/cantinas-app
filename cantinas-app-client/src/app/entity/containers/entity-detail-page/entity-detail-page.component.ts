@@ -2,13 +2,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-// import { ValidationService } from '../../shared2/services/validation.service';
-
-// import { EntityService } from '../../shared2/services/entity.service';
 import { Entity } from '../../../core/models/entity';
 
-import { Store, select } from '@ngrx/store';
-import { State } from '../../../core/models/app-state';
+import { Store } from '@ngrx/store';
+import { ExtendedAppState } from '../../state/entity-state.interfaces';
 import * as EntityActions from '../../state/entity.actions';
 import { Observable } from 'rxjs';
 
@@ -16,7 +13,6 @@ import { Observable } from 'rxjs';
     selector: 'app-entity-detail-page',
     templateUrl: './entity-detail-page.component.html',
     styleUrls: ['./entity-detail-page.component.scss'],
-    // providers: [EntityService],
 })
 export class EntityDetailPageComponent implements OnInit {
     entity$: Observable<Entity>;
@@ -30,7 +26,7 @@ export class EntityDetailPageComponent implements OnInit {
     categoryList: any;
 
     constructor(
-        private store: Store<State>,
+        private store: Store<ExtendedAppState>,
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,

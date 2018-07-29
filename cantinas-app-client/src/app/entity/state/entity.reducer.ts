@@ -1,28 +1,11 @@
-import { Action } from '@ngrx/store';
-import { Entity } from '../../core/models/entity';
 import { EntityActionTypes, EntityActions } from './entity.actions';
-import { State } from '../../core/models/app-state';
-
-export interface State extends State {
-    entity: EntityState;
-}
-
-// State for this feature (Entity)
-export interface EntityState {
-    // showProductCode: boolean;
-    currentEntityId: string | null;
-    entities: Entity[];
-    error: string;
-}
+import { EntityState } from './entity-state.interfaces';
 
 const initialState: EntityState = {
-    // showProductCode: true,
     currentEntityId: null,
     entities: [],
     error: '',
 };
-
-// const initialState: Entity = null;
 
 export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {

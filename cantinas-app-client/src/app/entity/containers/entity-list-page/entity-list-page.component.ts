@@ -6,7 +6,7 @@ import { ClrLoadingState } from '@clr/angular';
 import { Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
-import { State } from '../../state/entity.reducer';
+import { ExtendedAppState } from '../../state/entity-state.interfaces';
 
 @Component({
     selector: 'app-entity-list-page',
@@ -26,7 +26,7 @@ export class EntityListPageComponent implements OnInit {
 
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
-    constructor(private store: Store<State>) {}
+    constructor(private store: Store<ExtendedAppState>) {}
 
     ngOnInit() {
         // Do NOT subscribe here because it uses an async pipe
