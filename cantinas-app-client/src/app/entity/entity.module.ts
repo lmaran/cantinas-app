@@ -43,7 +43,7 @@ export const COMPONENTS = [EntityListComponent, EntityDetailComponent];
          * All Effects will only be instantiated once regardless of
          * whether they are registered once or multiple times.
          */
-        // EffectsModule.forFeature([BookEffects, EntityEffects]),
+        EffectsModule.forFeature([EntityEffects]),
     ],
     declarations: [...CONTAINERS, ...COMPONENTS],
 })
