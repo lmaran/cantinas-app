@@ -27,22 +27,16 @@ import { Header2Component } from './components/header2/header2.component';
 import { VerticalNavComponent } from './components/vertical-nav/vertical-nav.component';
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
-
-// import { UserListComponent } from './user/user-list/user-list.component';
-// import { UserDetailComponent } from './user/user-detail/user-detail.component';
-// import { DishListComponent } from './dish/dish-list/dish-list.component';
-// import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
-
 import { UserListComponent } from '../user/user-list/user-list.component';
 import { UserDetailComponent } from '../user/user-detail/user-detail.component';
 import { DishListComponent } from '../dish/dish-list/dish-list.component';
 import { DishDetailComponent } from '../dish/dish-detail/dish-detail.component';
 
-// export const COMPONENTS = [Layout2Component, Header2Component, VerticalNavComponent, AboutComponent, HomeComponent];
 export const COMPONENTS = [
     Layout2Component,
     Header2Component,
     VerticalNavComponent,
+
     AboutComponent,
     HomeComponent,
 

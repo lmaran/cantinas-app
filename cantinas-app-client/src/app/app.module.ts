@@ -10,22 +10,20 @@ import { AppRoutingModule } from './app-routing.module';
 
 // components (global / single use)
 import { AppComponent } from './app.component';
-
-// helpers
 import { environment } from '../environments/environment';
 
 @NgModule({
     declarations: [AppComponent],
     imports: [
         AppRoutingModule,
+        CoreModule.forRoot(),
         StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({
             name: 'Cantinas DevTools',
             maxAge: 25,
             logOnly: environment.production,
         }),
-        EffectsModule.forRoot([]),
-        CoreModule.forRoot(),
     ],
     bootstrap: [AppComponent],
 })
