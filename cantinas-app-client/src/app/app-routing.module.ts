@@ -3,10 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AboutComponent } from './core/components/about/about.component';
 import { HomeComponent } from './core/components/home/home.component';
-import { UserListComponent } from './user/user-list/user-list.component';
-import { UserDetailComponent } from './user/user-detail/user-detail.component';
-import { DishListComponent } from './dish/dish-list/dish-list.component';
-import { DishDetailComponent } from './dish/dish-detail/dish-detail.component';
+import { UserListComponent } from './core/components/user/user-list/user-list.component';
+import { UserDetailComponent } from './core/components/user/user-detail/user-detail.component';
+import { DishListComponent } from './core/components/dish/dish-list/dish-list.component';
+import { DishDetailComponent } from './core/components/dish/dish-detail/dish-detail.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -2,23 +2,31 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { ValidationService } from '../../core/services/validation.service';
+// import { ValidationService } from '../../../services/validation.service';
 
-import { UserService } from '../../core/services/user.service';
-import { User } from '../../core/models/user';
+import { DishService } from '../../../services/dish.service';
+import { Dish } from '../../../models/dish';
 
 @Component({
-    selector: 'app-user-detail',
-    templateUrl: './user-detail.component.html',
-    styleUrls: ['./user-detail.component.scss'],
+    selector: 'app-dish-detail',
+    templateUrl: './dish-detail.component.html',
+    styleUrls: ['./dish-detail.component.scss'],
 })
-export class UserDetailComponent implements OnInit {
+export class DishDetailComponent implements OnInit {
     isEditMode: boolean;
     submitted: boolean;
-    userForm: FormGroup;
-    user: User;
+    dishForm: FormGroup;
+    dish: Dish;
     title: string;
     private formSubmitAttempt: boolean;
+    categoryList: any;
+    // categoryList: [
+    //     { label: '' },
+    //     { value: '1'; label: 'Supa' },
+    //     { value: '2'; label: 'Felul doi' },
+    //     { value: '3'; label: 'Salata' },
+    //     { value: '4'; label: 'Desert' }
+    // ];
 
     // firstName = new FormControl('', Validators.required);
 
@@ -26,7 +34,7 @@ export class UserDetailComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
-        private userService: UserService,
+        private dishService: DishService,
         private location: Location,
         public renderer2: Renderer2
     ) {
@@ -34,21 +42,22 @@ export class UserDetailComponent implements OnInit {
     }
 
     createForm() {
-        this.userForm = this.formBuilder.group({
-            firstName: ['', [Validators.required, Validators.minLength(3)]],
-            lastName: ['', [Validators.required, Validators.minLength(2)]],
-            // age: '',
-            email: [null, [Validators.required, Validators.email]],
+        this.dishForm = this.formBuilder.group({
+            name: ['', [Validators.required, Validators.minLength(3)]],
+            description: [''],
+            category: '',
+            calories: '',
+            isFasting: false,
         });
     }
 
     isFieldInvalid(field: string) {
         // return (
-        //     (!this.userForm.get(field).valid && this.userForm.get(field).touched) ||
-        //     (this.userForm.get(field).untouched && this.formSubmitAttempt)
+        //     (!this.dishForm.get(field).valid && this.dishForm.get(field).touched) ||
+        //     (this.dishForm.get(field).untouched && this.formSubmitAttempt)
         // );
 
-        return !this.userForm.get(field).valid && this.formSubmitAttempt;
+        return !this.dishForm.get(field).valid && this.formSubmitAttempt;
     }
 
     // // https://loiane.com/2017/08/angular-reactive-forms-trigger-validation-on-submit
@@ -81,22 +90,22 @@ export class UserDetailComponent implements OnInit {
     onSubmit() {
         this.formSubmitAttempt = true;
 
-        if (this.userForm.invalid) {
+        if (this.dishForm.invalid) {
             return;
         }
 
-        const user = this.userForm.value;
+        const dish = this.dishForm.value;
         this.submitted = true;
 
         if (this.isEditMode) {
-            user._id = this.user._id;
+            dish._id = this.dish._id;
 
-            this.userService.updateUser(user).subscribe(saved => {
-                this.router.navigate(['/users']);
+            this.dishService.updateDish(dish).subscribe(saved => {
+                this.router.navigate(['/dishes']);
             });
         } else {
-            this.userService.createUser(user).subscribe(saved => {
-                this.router.navigate(['/users']);
+            this.dishService.createDish(dish).subscribe(saved => {
+                this.router.navigate(['/dishes']);
             });
         }
     }
@@ -107,13 +116,21 @@ export class UserDetailComponent implements OnInit {
     }
 
     // reset() {
-    //     this.userForm.reset();
+    //     this.dishForm.reset();
     //     this.formSubmitAttempt = false;
     // }
 
     ngOnInit() {
+        this.categoryList = [
+            { label: '' },
+            { value: '1', label: 'Supa' },
+            { value: '2', label: 'Felul doi' },
+            { value: '3', label: 'Salata' },
+            { value: '4', label: 'Desert' },
+        ];
+
         // focus on first field https://stackoverflow.com/a/34573219/2726725
-        this.renderer2.selectRootElement('#userLastName').focus();
+        this.renderer2.selectRootElement('#dishName').focus();
 
         // or directly...https://github.com/rogerpadilla/angular2-minimalist-starter/blob/master/src/app/question/question-form.component.ts
         // const id = this.route.snapshot.params['id'];
@@ -121,22 +138,27 @@ export class UserDetailComponent implements OnInit {
             const id = params['id'];
             if (id) {
                 this.isEditMode = true;
-                this.title = 'Editeaza utilizator';
+                this.title = 'Editeaza felul de mancare';
 
-                this.userService.getUserById(id.toString()).subscribe((user: User) => {
-                    this.user = user;
-                    this.userForm.reset({ firstName: user.firstName, lastName: user.lastName });
-                    // console.log(user);
+                this.dishService.getDishById(id.toString()).subscribe((dish: any) => {
+                    this.dish = dish;
+                    this.dishForm.reset({
+                        name: dish.name,
+                        category: dish.category,
+                        calories: dish.calories,
+                        description: dish.description,
+                        isFasting: dish.isFasting,
+                    });
                 });
             } else {
-                this.title = 'Adauga utilizator';
+                this.title = 'Adauga fel de mancare';
             }
         });
     }
 
     // // listen for changes on the entire form
     // onChanges(): void {
-    //     this.userForm.valueChanges.subscribe(val => {
+    //     this.dishForm.valueChanges.subscribe(val => {
     //         this.getFirstErr = `Hello,
     //       My name is ${val.firstName} and my email is ${val.email}.`;
     //     });
@@ -144,12 +166,12 @@ export class UserDetailComponent implements OnInit {
 
     // listen for changes on on specific form control
     // onChanges(): void {
-    //     this.userForm.get('email').valueChanges.subscribe(val => {
-    //         console.log(this.userForm.get('email').errors);
+    //     this.dishForm.get('email').valueChanges.subscribe(val => {
+    //         console.log(this.dishForm.get('email').errors);
 
-    //         const errors = this.userForm.get('email').errors;
+    //         const errors = this.dishForm.get('email').errors;
     //         if (errors) {
-    //             const k = Object.keys(this.userForm.get('email').errors);
+    //             const k = Object.keys(this.dishForm.get('email').errors);
     //             // if (k && k.length > 0) {
     //             //     console.log(k[0]);
     //             // }

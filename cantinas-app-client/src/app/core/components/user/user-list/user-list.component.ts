@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../core/models/user';
-import { UserService } from '../../core/services/user.service';
-import { AppModalComponent } from '../../shared/components/confirmDelete/confirmDelete.component';
+import { User } from '../../../models/user';
+import { UserService } from '../../../services/user.service';
+import { AppModalComponent } from '../../../../shared/components/confirmDelete/confirmDelete.component';
 
 @Component({
     selector: 'app-user-list',
