@@ -16,16 +16,42 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 error: '',
             };
 
+        case EntityActionTypes.LOAD_SUCCESS:
+            return {
+                ...state,
+                entities: [],
+                error: action.payload,
+            };
+
         // case EntityActions.ADD_ENTITY:
         //     return [...state, action.payload];
 
         case EntityActionTypes.DELETE:
-            const yyy = action.payload;
+            return {
+                ...state,
+                entities: state.entities.filter(x => x._id !== action.payload),
+                error: '',
+            };
 
-            const newState = state;
-            // const newState = state.filter(x => x._id !== action.payload);
+        // After a delete, the currentEntity is null.
+        case EntityActionTypes.DELETE_SUCCESS:
+            return {
+                ...state,
+                entities: state.entities.filter(x => x._id !== action.payload),
+                currentEntityId: null,
+                error: '',
+            };
 
-            return newState;
+        case EntityActionTypes.DELETE_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+            };
+
+        // // const newState = state;
+        // const newState = state.entities.filter(x => x._id !== action.payload);
+
+        // return newState;
         default:
             return state;
     }

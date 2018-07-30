@@ -36,4 +36,16 @@ export class EntityEffects {
             )
         )
     );
+
+    @Effect()
+    deleteEntity$: Observable<Action> = this.actions$.pipe(
+        ofType(entityActions.EntityActionTypes.DELETE),
+        map((action: entityActions.DeleteEntity) => action.payload),
+        mergeMap((entityId: string) =>
+            this.entityService.deleteEntityById(entityId).pipe(
+                map(() => new entityActions.DeleteEntitySuccess(entityId)),
+                catchError(err => of(new entityActions.DeleteEntityFail(err)))
+            )
+        )
+    );
 }

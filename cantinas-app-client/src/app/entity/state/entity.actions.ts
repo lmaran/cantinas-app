@@ -28,24 +28,6 @@ export enum EntityActionTypes {
     DELETE_FAIL = '[Entity] Delete Fail',
 }
 
-// export const ADD_ENTITY = '[ENTITY] Add';
-
-// export const UPDATE_ENTITY = '[ENTITY] Update';
-// export const UPDATE_ENTITY_SUCCESS = '[ENTITY] Update Success';
-// export const UPDATE_ENTITY_FAIL = '[ENTITY] Update Fail';
-
-// export const REMOVE_ENTITY = '[ENTITY] Remove';
-
-// export const LOAD = '[Product] Load';
-// export const LOAD_SUCCESS = '[Product] Load Success';
-// export const LOAD_FAIL = '[Product] Load Fail';
-
-// export class AddEntity implements Action {
-//     readonly type = ADD_ENTITY;
-
-//     constructor(public payload: Entity) {}
-// }
-
 // update
 export class UpdateEntity implements Action {
     readonly type = EntityActionTypes.UPDATE;
@@ -66,8 +48,21 @@ export class UpdateEntityFail implements Action {
     constructor(public payload: string) {}
 }
 
+// delete
 export class DeleteEntity implements Action {
     readonly type = EntityActionTypes.DELETE;
+
+    constructor(public payload: string) {}
+}
+
+export class DeleteEntitySuccess implements Action {
+    readonly type = EntityActionTypes.DELETE_SUCCESS;
+
+    constructor(public payload: string) {}
+}
+
+export class DeleteEntityFail implements Action {
+    readonly type = EntityActionTypes.DELETE_FAIL;
 
     constructor(public payload: string) {}
 }
@@ -89,4 +84,11 @@ export class LoadFail implements Action {
     constructor(public payload: any) {}
 }
 
-export type EntityActions = DeleteEntity | Load | LoadSuccess | LoadFail;
+export type EntityActions =
+    | DeleteEntity
+    | Load
+    | LoadSuccess
+    | LoadFail
+    | DeleteEntity
+    | DeleteEntitySuccess
+    | DeleteEntityFail;

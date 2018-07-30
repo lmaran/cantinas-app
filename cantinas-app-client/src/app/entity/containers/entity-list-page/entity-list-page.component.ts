@@ -1,10 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
-import { EntityService } from '../../../core/services/entity.service';
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
@@ -13,60 +12,27 @@ import { ExtendedAppState } from '../../state/entity.interfaces';
     selector: 'app-entity-list-page',
     templateUrl: './entity-list-page.component.html',
     styleUrls: ['./entity-list-page.component.scss'],
-    providers: [EntityService],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityListPageComponent implements OnInit {
-    newEntity: Entity = new Entity();
+    // newEntity: Entity = new Entity();
 
     entities$: Observable<Entity[]>;
 
-    selectedEntity: Entity = new Entity();
-    title: string;
-    categoryList: any;
+    // selectedEntity: Entity = new Entity();
+    // title: string;
+    // categoryList: any;
 
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     constructor(private store: Store<ExtendedAppState>) {}
 
     ngOnInit() {
-        // Do NOT subscribe here because it uses an async pipe
-        // This gets the initial values until the load is complete.
-        // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
-        // ok, without selectors
-        // this.entities$ = this.store.select(state => state.entity.entities) as Observable<Entity[]>;
-        // with selectors
         this.entities$ = this.store.select(EntitySelectors.getEntities);
-
         this.store.dispatch(new EntityActions.Load());
-        // this.entities$ = this.store.pipe(select('entity')) as Observable<Entity[]>;
-
-        // // Do NOT subscribe here because it used an async pipe
-        // // this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-
-        // // Subscribe here because it does not use an async pipe
-        // this.store
-        //     .pipe(
-        //         select(fromProduct.getCurrentProduct),
-        //         takeWhile(() => this.componentActive)
-        //     )
-        //     .subscribe(currentProduct => (this.selectedProduct = currentProduct));
-
-        // // Subscribe here because it does not use an async pipe
-        // this.store
-        //     .pipe(
-        //         select(fromProduct.getShowProductCode),
-        //         takeWhile(() => this.componentActive)
-        //     )
-        //     .subscribe(showProductCode => (this.displayCode = showProductCode));
-
-        // this.store
-        //     .subscribe(showProductCode => (this.displayCode = showProductCode));
     }
 
     refreshEntityList() {
-        // this.refreshBtnState = ClrLoadingState.LOADING;
-        // this.getEntityList();
         this.store.dispatch(new EntityActions.Load());
     }
 
