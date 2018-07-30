@@ -4,22 +4,30 @@ import { EntityState } from './entity.interfaces';
 const initialState: EntityState = {
     currentEntityId: null,
     entities: [],
+    loading: false,
     error: '',
 };
 
 export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {
+        case EntityActionTypes.LOAD:
+            return {
+                ...state,
+                loading: true,
+            };
         case EntityActionTypes.LOAD_SUCCESS:
             return {
                 ...state,
                 entities: action.payload,
+                loading: false,
                 error: '',
             };
 
-        case EntityActionTypes.LOAD_SUCCESS:
+        case EntityActionTypes.LOAD_FAIL:
             return {
                 ...state,
                 entities: [],
+                loading: false,
                 error: action.payload,
             };
 

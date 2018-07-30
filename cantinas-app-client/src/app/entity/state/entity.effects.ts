@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, delay } from 'rxjs/operators';
 
 import { EntityService } from '../../core/services/entity.service';
 
@@ -19,6 +19,7 @@ export class EntityEffects {
         ofType(entityActions.EntityActionTypes.LOAD),
         mergeMap(action =>
             this.entityService.getAllEntities().pipe(
+                delay(200), // just to see the spinner on the screen
                 map(entities => new entityActions.LoadSuccess(entities)),
                 catchError(err => of(new entityActions.LoadFail(err)))
             )

@@ -42,4 +42,6 @@ export const getCurrentEntity = createSelector(getEntityFeatureState, getCurrent
     state.entities.find(p => p._id === currentEntityId)
 );
 
+export const isEntityLoading = createSelector(getEntityFeatureState, state => state.loading);
+
 export const getError = createSelector(getEntityFeatureState, state => state.error);

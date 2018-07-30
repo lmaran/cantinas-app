@@ -18,6 +18,7 @@ export class EntityListPageComponent implements OnInit {
     // newEntity: Entity = new Entity();
 
     entities$: Observable<Entity[]>;
+    loading$: Observable<boolean>;
 
     // selectedEntity: Entity = new Entity();
     // title: string;
@@ -29,6 +30,7 @@ export class EntityListPageComponent implements OnInit {
 
     ngOnInit() {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
+        this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
         this.store.dispatch(new EntityActions.Load());
     }
 

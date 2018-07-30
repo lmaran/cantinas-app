@@ -79,7 +79,7 @@ export class LoadSuccess implements Action {
 }
 
 export class LoadFail implements Action {
-    readonly type = EntityActionTypes.LOAD_SUCCESS;
+    readonly type = EntityActionTypes.LOAD_FAIL;
 
     constructor(public payload: any) {}
 }

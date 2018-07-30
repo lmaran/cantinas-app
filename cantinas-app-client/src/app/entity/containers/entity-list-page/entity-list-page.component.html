@@ -10,4 +10,4 @@
     Refresh
 </button>
 
-<app-entity-list [entities]="entities$ | async" (delete)="deleteEntity($event)"></app-entity-list>
+<app-entity-list [entities]="entities$ | async" [loading]="loading$ | async" (delete)="deleteEntity($event)"></app-entity-list>

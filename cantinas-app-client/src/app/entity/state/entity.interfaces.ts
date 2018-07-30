@@ -12,5 +12,6 @@ export interface ExtendedAppState extends AppState {
 export interface EntityState {
     currentEntityId: string | null;
     entities: Entity[];
+    loading: boolean;
     error: string;
 }
