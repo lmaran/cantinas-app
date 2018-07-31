@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 import { Entity } from '../../core/models/entity';
 
 export enum EntityActionTypes {
-    SetCurrentEntity = '[Entity] Set Current Entity',
+    // SetCurrentEntity = '[Entity] Set Current Entity',
 
     InitializeCurrentEntity = '[Entity] Initialize Current Entity',
 
@@ -26,6 +26,9 @@ export enum EntityActionTypes {
     DELETE = '[Entity] Delete',
     DELETE_SUCCESS = '[Entity] Delete Success',
     DELETE_FAIL = '[Entity] Delete Fail',
+
+    SET_CURRENT_ENTITY_ID = '[Entity] Set current Id',
+    GO_TO_ENTITY = '[Entity] Go',
 }
 
 // update
@@ -84,6 +87,18 @@ export class LoadFail implements Action {
     constructor(public payload: any) {}
 }
 
+// set current entity ID
+export class SetCurrentEntityId implements Action {
+    readonly type = EntityActionTypes.SET_CURRENT_ENTITY_ID;
+    constructor(public payload: string) {}
+}
+
+// go to entity
+export class GoToEntity implements Action {
+    readonly type = EntityActionTypes.GO_TO_ENTITY;
+    constructor(public payload: string) {}
+}
+
 export type EntityActions =
     | DeleteEntity
     | Load
@@ -91,4 +106,6 @@ export type EntityActions =
     | LoadFail
     | DeleteEntity
     | DeleteEntitySuccess
-    | DeleteEntityFail;
+    | DeleteEntityFail
+    | SetCurrentEntityId
+    | GoToEntity;

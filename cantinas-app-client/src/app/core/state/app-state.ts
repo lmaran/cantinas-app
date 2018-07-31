@@ -1,2 +1,6 @@
-// tslint:disable-next-line:no-empty-interface
-export interface AppState {}
+export interface RouteState {
+    path: string;
+}
+export interface AppState {
+    currentRoute: RouteState;
+}

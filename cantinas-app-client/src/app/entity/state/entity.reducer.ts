@@ -56,6 +56,12 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 error: action.payload,
             };
 
+        case EntityActionTypes.SET_CURRENT_ENTITY_ID: {
+            return {
+                ...state,
+                currentEntityId: action.payload,
+            };
+        }
         // // const newState = state;
         // const newState = state.entities.filter(x => x._id !== action.payload);
 
