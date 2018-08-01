@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Action } from '@ngrx/store';
 import { Entity } from '../../core/models/entity';
 
@@ -7,13 +6,13 @@ export enum EntityActionTypes {
 
     InitializeCurrentEntity = '[Entity] Initialize Current Entity',
 
-    // LOAD_ALL = '[Entity] Load All',
-    // LOAD_ALL_SUCCESS = '[Entity] Load All Success',
-    // LOAD_ALL_FAIL = '[Entity] Load All Fail',
+    GET_ALL = '[Entity] Get All',
+    GET_ALL_SUCCESS = '[Entity] Get All Success',
+    GET_ALL_FAIL = '[Entity] Get All Fail',
 
-    LOAD = '[Entity] Load',
-    LOAD_SUCCESS = '[Entity] Load Success',
-    LOAD_FAIL = '[Entity] Load Fail',
+    GET_ONE = '[Entity] Get One',
+    GET_ONE_SUCCESS = '[Entity] Get One Success',
+    GET_ONE_FAIL = '[Entity] Get One Fail',
 
     UPDATE = '[Entity] Update',
     UPDATE_SUCCESS = '[Entity] Update Success',
@@ -70,19 +69,38 @@ export class DeleteEntityFail implements Action {
     constructor(public payload: string) {}
 }
 
-// load
-export class Load implements Action {
-    readonly type = EntityActionTypes.LOAD;
+// load all
+export class GetAll implements Action {
+    readonly type = EntityActionTypes.GET_ALL;
 }
 
-export class LoadSuccess implements Action {
-    readonly type = EntityActionTypes.LOAD_SUCCESS;
+export class GetAllSuccess implements Action {
+    readonly type = EntityActionTypes.GET_ALL_SUCCESS;
 
     constructor(public payload: Entity[]) {}
 }
 
-export class LoadFail implements Action {
-    readonly type = EntityActionTypes.LOAD_FAIL;
+export class GetAllFail implements Action {
+    readonly type = EntityActionTypes.GET_ALL_FAIL;
+
+    constructor(public payload: any) {}
+}
+
+// load one
+export class GetOne implements Action {
+    readonly type = EntityActionTypes.GET_ONE;
+
+    constructor(public payload: string) {}
+}
+
+export class GetOneSuccess implements Action {
+    readonly type = EntityActionTypes.GET_ONE_SUCCESS;
+
+    constructor(public payload: Entity) {}
+}
+
+export class GetOneFail implements Action {
+    readonly type = EntityActionTypes.GET_ONE_FAIL;
 
     constructor(public payload: any) {}
 }
@@ -101,9 +119,12 @@ export class GoToEntity implements Action {
 
 export type EntityActions =
     | DeleteEntity
-    | Load
-    | LoadSuccess
-    | LoadFail
+    | GetAll
+    | GetAllSuccess
+    | GetAllFail
+    | GetOne
+    | GetOneSuccess
+    | GetOneFail
     | DeleteEntity
     | DeleteEntitySuccess
     | DeleteEntityFail

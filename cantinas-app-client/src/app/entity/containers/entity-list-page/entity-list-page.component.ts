@@ -31,11 +31,11 @@ export class EntityListPageComponent implements OnInit {
     ngOnInit() {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
-        this.store.dispatch(new EntityActions.Load());
+        this.store.dispatch(new EntityActions.GetAll());
     }
 
     refreshEntityList() {
-        this.store.dispatch(new EntityActions.Load());
+        this.store.dispatch(new EntityActions.GetAll());
     }
 
     // getEntityList() {

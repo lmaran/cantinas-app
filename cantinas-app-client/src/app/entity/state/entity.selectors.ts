@@ -33,13 +33,17 @@ const getEntityFeatureState = createFeatureSelector<EntityState>('entity');
 // );
 
 // here 'state' is the result of first argument
-export const getEntities = createSelector(getEntityFeatureState, state => state.entities);
+export const getEntities = createSelector(getEntityFeatureState, state => Object.values(state.entities));
 
 export const getCurrentEntityId = createSelector(getEntityFeatureState, state => state.currentEntityId);
 
 // 'state' and 'currentEntityIs' are the result of first two arguments
-export const getCurrentEntity = createSelector(getEntityFeatureState, getCurrentEntityId, (state, currentEntityId) =>
-    state.entities.find(p => p._id === currentEntityId)
+export const getCurrentEntity = createSelector(
+    getEntityFeatureState,
+    getCurrentEntityId,
+    (state, currentEntityId) =>
+        // state.entities.find(p => p._id === currentEntityId)
+        state.entities[state.currentEntityId]
 );
 
 export const isEntityLoading = createSelector(getEntityFeatureState, state => state.loading);

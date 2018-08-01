@@ -12,7 +12,6 @@ import { Entity } from '../../../core/models/entity';
 })
 export class EntityDetailComponent implements OnInit {
     @Input() entity: Entity;
-
     isEditMode: boolean;
     submitted: boolean;
     entityForm: FormGroup;
@@ -141,6 +140,12 @@ export class EntityDetailComponent implements OnInit {
                 //         description: entity.description,
                 //     });
                 // });
+                this.entityForm.reset({
+                    displayName: this.entity.displayName,
+                    pluralName: this.entity.pluralName,
+                    uniqueName: this.entity.uniqueName,
+                    description: this.entity.description,
+                });
             } else {
                 this.title = 'Adauga entitate';
             }

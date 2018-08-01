@@ -3,12 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { EntityListPageComponent } from './containers/entity-list-page/entity-list-page.component';
 
-import { EntityDetailComponent } from './components/entity-detail/entity-detail.component';
+import { EntityDetailPageComponent } from './containers/entity-detail-page/entity-detail-page.component';
 
 const routes: Routes = [
     { path: '', component: EntityListPageComponent },
-    { path: 'add', component: EntityDetailComponent },
-    { path: ':id', component: EntityDetailComponent },
+    { path: 'add', component: EntityDetailPageComponent },
+    { path: ':id', component: EntityDetailPageComponent },
 ];
 
 @NgModule({

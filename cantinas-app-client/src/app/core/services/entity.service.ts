@@ -25,10 +25,9 @@ export class EntityService {
         return this.http.get<Entity[]>(this.entityUrl).pipe(catchError(this.handleError('getAllEntities', [])));
     }
 
-    public getEntityById(entityId: string): Observable<Entity | string> {
-        return this.http
-            .get<Entity>(`${this.entityUrl}/${entityId}`)
-            .pipe(catchError(this.handleError('getEntityById', entityId)));
+    public getEntityById(entityId: string): Observable<Entity> {
+        return this.http.get<Entity>(`${this.entityUrl}/${entityId}`);
+        // .pipe(catchError(this.handleError('getEntityById', entityId)));
     }
 
     /*

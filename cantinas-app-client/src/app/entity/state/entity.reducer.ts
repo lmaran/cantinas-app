@@ -1,32 +1,37 @@
 import { EntityActionTypes, EntityActions } from './entity.actions';
 import { EntityState } from './entity.interfaces';
+import { Entity } from '../../core/models/entity';
 
 const initialState: EntityState = {
     currentEntityId: null,
-    entities: [],
+    entities: {},
     loading: false,
     error: '',
 };
 
 export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {
-        case EntityActionTypes.LOAD:
+        case EntityActionTypes.GET_ALL:
             return {
                 ...state,
                 loading: true,
             };
-        case EntityActionTypes.LOAD_SUCCESS:
+        case EntityActionTypes.GET_ALL_SUCCESS:
+            const entities = <Entity[]>action.payload;
             return {
                 ...state,
-                entities: action.payload,
+                entities: entities.reduce((obj: { [id: string]: Entity }, item: Entity) => {
+                    obj[item._id] = item;
+                    return obj;
+                }, {}),
                 loading: false,
                 error: '',
             };
 
-        case EntityActionTypes.LOAD_FAIL:
+        case EntityActionTypes.GET_ALL_FAIL:
             return {
                 ...state,
-                entities: [],
+                entities: {},
                 loading: false,
                 error: action.payload,
             };
@@ -35,9 +40,14 @@ export function reducer(state: EntityState = initialState, action: EntityActions
         //     return [...state, action.payload];
 
         case EntityActionTypes.DELETE:
+            // https://coderwall.com/p/xrssxg/immutable-way-to-delete-a-key-from-an-object
+            // https://stackoverflow.com/a/47227198/2726725
+            const id = action.payload;
+            const { [id]: deleted, ...newEntities } = state.entities;
             return {
                 ...state,
-                entities: state.entities.filter(x => x._id !== action.payload),
+                // entities: state.entities.filter(x => x._id !== action.payload),
+                entities: newEntities,
                 error: '',
             };
 
@@ -45,7 +55,7 @@ export function reducer(state: EntityState = initialState, action: EntityActions
         case EntityActionTypes.DELETE_SUCCESS:
             return {
                 ...state,
-                entities: state.entities.filter(x => x._id !== action.payload),
+                entities: newEntities,
                 currentEntityId: null,
                 error: '',
             };
