@@ -1,22 +1,24 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Entity } from '../../../core/models/entity';
 
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as EntityActions from '../../state/entity.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { mergeMap, map, catchError, delay, tap } from 'rxjs/operators';
 
 @Component({
     selector: 'app-entity-detail-page',
     templateUrl: './entity-detail-page.component.html',
     styleUrls: ['./entity-detail-page.component.scss'],
 })
-export class EntityDetailPageComponent implements OnInit {
+export class EntityDetailPageComponent implements OnInit, OnDestroy {
     entity$: Observable<Entity>;
+    actionsSubscription: Subscription;
 
     isEditMode: boolean;
     submitted: boolean;
@@ -35,10 +37,23 @@ export class EntityDetailPageComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        console.log(123);
+        // https://github.com/ngrx/platform/blob/master/example-app/app/books/containers/view-book-page.component.ts
+        // this.actionsSubscription = this.route.params
+        //     .pipe(map(params => new EntityActions.GetOne(params.id)))
+        //     .subscribe(this.store);
+
+        this.actionsSubscription = this.route.params.subscribe(params => {
+            this.store.dispatch(new EntityActions.GetOne(params.id));
+            // this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
+            // this.entity$ = this.store.select(params.id);
+        });
+
+        // const id: string = this.route.snapshot.params.id;
+        // console.log(id);
+        // this.store.dispatch(new EntityActions.GetOne(id));
         this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
+
         // this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
-        this.store.dispatch(new EntityActions.GetOne('5b45c5638fc8377b250df527'));
     }
 
     // constructor(private store: Store<ExtendedAppState>) {}
@@ -195,4 +210,9 @@ export class EntityDetailPageComponent implements OnInit {
     //         // });
     //     });
     // }
+
+    // https://github.com/ngrx/platform/blob/master/example-app/app/books/containers/view-book-page.component.ts
+    ngOnDestroy() {
+        this.actionsSubscription.unsubscribe();
+    }
 }

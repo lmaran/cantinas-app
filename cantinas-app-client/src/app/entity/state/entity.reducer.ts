@@ -36,6 +36,35 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 error: action.payload,
             };
 
+        case EntityActionTypes.GET_ONE:
+            const id2 = <string>action.payload;
+            return {
+                ...state,
+                currentEntityId: id2,
+                loading: false,
+                error: '',
+            };
+
+        case EntityActionTypes.GET_ONE_SUCCESS:
+            const entity = <Entity>action.payload;
+            return {
+                ...state,
+                currentEntityId: entity._id,
+                entities: {
+                    ...state.entities,
+                    [entity._id]: entity,
+                },
+                loading: false,
+                error: '',
+            };
+
+        case EntityActionTypes.GET_ONE_FAIL:
+            return {
+                ...state,
+                entities: {},
+                loading: false,
+                error: action.payload,
+            };
         // case EntityActions.ADD_ENTITY:
         //     return [...state, action.payload];
 
