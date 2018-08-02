@@ -41,9 +41,7 @@ export const getCurrentEntityId = createSelector(getEntityFeatureState, state =>
 export const getCurrentEntity = createSelector(
     getEntityFeatureState,
     getCurrentEntityId,
-    (state, currentEntityId) =>
-        // state.entities.find(p => p._id === currentEntityId)
-        state.entities[currentEntityId]
+    (state, currentEntityId) => currentEntityId && state.entities[currentEntityId]
 );
 
 export const isEntityLoading = createSelector(getEntityFeatureState, state => state.loading);

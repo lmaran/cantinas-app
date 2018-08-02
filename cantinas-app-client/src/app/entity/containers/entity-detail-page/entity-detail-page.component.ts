@@ -1,218 +1,69 @@
-import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
-import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
+import { ClrLoadingState } from '@clr/angular';
 
-import { Store, select } from '@ngrx/store';
-import { ExtendedAppState } from '../../state/entity.interfaces';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
-import { Observable, Subscription } from 'rxjs';
-import { mergeMap, map, catchError, delay, tap } from 'rxjs/operators';
+import { ExtendedAppState } from '../../state/entity.interfaces';
 
 @Component({
     selector: 'app-entity-detail-page',
     templateUrl: './entity-detail-page.component.html',
     styleUrls: ['./entity-detail-page.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntityDetailPageComponent implements OnInit, OnDestroy {
-    entity$: Observable<Entity>;
-    actionsSubscription: Subscription;
+export class EntityDetailPageComponent implements OnInit {
+    // newEntity: Entity = new Entity();
 
-    isEditMode: boolean;
-    submitted: boolean;
-    entityForm: FormGroup;
+    entities$: Observable<Entity[]>;
+    loading$: Observable<boolean>;
 
-    title: string;
-    private formSubmitAttempt: boolean;
-    categoryList: any;
+    // selectedEntity: Entity = new Entity();
+    // title: string;
+    // categoryList: any;
 
-    constructor(
-        private store: Store<ExtendedAppState>,
-        private router: Router,
-        private route: ActivatedRoute,
-        private location: Location,
-        public renderer2: Renderer2
-    ) {}
+    refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+
+    constructor(private store: Store<ExtendedAppState>) {}
 
     ngOnInit() {
-        // https://github.com/ngrx/platform/blob/master/example-app/app/books/containers/view-book-page.component.ts
-        // this.actionsSubscription = this.route.params
-        //     .pipe(map(params => new EntityActions.GetOne(params.id)))
-        //     .subscribe(this.store);
-
-        this.actionsSubscription = this.route.params.subscribe(params => {
-            this.store.dispatch(new EntityActions.GetOne(params.id));
-            // this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
-            // this.entity$ = this.store.select(params.id);
-        });
-
-        // const id: string = this.route.snapshot.params.id;
-        // console.log(id);
-        // this.store.dispatch(new EntityActions.GetOne(id));
-        this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
-
-        // this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
+        this.entities$ = this.store.select(EntitySelectors.getEntities);
+        this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
+        this.store.dispatch(new EntityActions.GetAll());
     }
 
-    // constructor(private store: Store<ExtendedAppState>) {}
-
-    // createForm() {
-    //     this.entityForm = this.formBuilder.group({
-    //         displayName: ['', [Validators.required, Validators.minLength(3)]],
-    //         pluralName: ['', [Validators.required, Validators.minLength(3)]],
-    //         uniqueName: ['', [Validators.required, Validators.minLength(3)]],
-
-    //         description: ['', [Validators.required]],
-    //     });
-    // }
-
-    isFieldInvalid(field: string) {
-        // return (
-        //     (!this.entityForm.get(field).valid && this.entityForm.get(field).touched) ||
-        //     (this.entityForm.get(field).untouched && this.formSubmitAttempt)
-        // );
-
-        return !this.entityForm.get(field).valid && this.formSubmitAttempt;
+    refreshEntityList() {
+        this.store.dispatch(new EntityActions.GetAll());
     }
 
-    // // https://loiane.com/2017/08/angular-reactive-forms-trigger-validation-on-submit
-    // validateAllFormFields(formGroup: FormGroup) {
-    //     Object.keys(formGroup.controls).forEach(field => {
-    //         const control = formGroup.get(field);
-    //         if (control instanceof FormControl) {
-    //             control.markAsTouched({ onlySelf: true });
-    //             console.log(field); // firstName, email
-    //             console.log(control.errors); // {required:true, email:true}
-
-    //             if (control.errors && control.errors.required) {
-    //                 const propertyName = 'required';
-    //                 const err = ValidationService.getValidatorErrorMessage(propertyName, control.errors[propertyName]);
-    //                 console.log(err);
-    //             } else if (control.errors && control.errors.email) {
-    //                 const propertyName = 'email';
-    //                 const err = ValidationService.getValidatorErrorMessage(propertyName, control.errors[propertyName]);
-    //                 console.log(err);
-    //             } else {
+    // getEntityList() {
+    //     this.entityService.getAllEntities().subscribe(entities => {
+    //         this.entities = entities.map(x => {
+    //             const newCategory = this.categoryList.find(c => c.value === x.category);
+    //             if (newCategory) {
+    //                 x.category = newCategory.label;
     //             }
+    //             return x;
+    //         });
 
-    //             console.log('------------------');
-    //         } else if (control instanceof FormGroup) {
-    //             this.validateAllFormFields(control);
+    //         if (this.refreshBtnState === ClrLoadingState.LOADING) {
+    //             this.refreshBtnState = ClrLoadingState.SUCCESS;
     //         }
     //     });
     // }
 
-    onSubmit() {
-        this.formSubmitAttempt = true;
+    deleteEntity = function(entity) {
+        this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
+    };
 
-        // if (this.entityForm.invalid) {
-        //     return;
-        // }
+    editEntity = function(entity) {
+        // un-comment below line as needed
+        // this.store.dispatch(new EntityActions.SetCurrentEntityId(entity._id));
 
-        const entity = this.entityForm.value;
-        this.submitted = true;
-
-        if (this.isEditMode) {
-            // entity._id = this.entity._id;
-
-            // this.entityService.updateEntity(entity).subscribe(saved => {
-            //     this.router.navigate(['/entities']);
-            // });
-            this.store.dispatch(new EntityActions.UpdateEntitySuccess(entity));
-        } else {
-            // this.entityService.createEntity(entity).subscribe(saved => {
-            //     // this.router.navigate(['/entities']);
-            // });
-            // this.store.dispatch(new EntityActions.AddEntity(entity));
-        }
-    }
-
-    goBack() {
-        // https://stackoverflow.com/a/36470719
-        this.location.back();
-    }
-
-    // reset() {
-    //     this.entityForm.reset();
-    //     this.formSubmitAttempt = false;
-    // }
-
-    ngOnInit_old() {
-        this.categoryList = [
-            { label: '' },
-            { value: '1', label: 'Supa' },
-            { value: '2', label: 'Felul doi' },
-            { value: '3', label: 'Salata' },
-            { value: '4', label: 'Desert' },
-        ];
-
-        // focus on first field https://stackoverflow.com/a/34573219/2726725
-        this.renderer2.selectRootElement('#entityName').focus();
-
-        // or directly...https://github.com/rogerpadilla/angular2-minimalist-starter/blob/master/src/app/question/question-form.component.ts
-        // const id = this.route.snapshot.params['id'];
-        this.route.params.subscribe((params: Params) => {
-            const id = params['id'];
-            if (id) {
-                this.isEditMode = true;
-                this.title = 'Editeaza entitate';
-
-                // this.entity = {
-                //     _id: '123',
-                //     name: 'name',
-                //     pluralName: 'ppp',
-                //     displayName: 'ddd',
-                //     uniqueName: 'uuu',
-                //     description: 'description',
-                // };
-
-                // this.entityService.getEntityById(id.toString()).subscribe((entity: any) => {
-                //     this.entity = entity;
-                // });
-
-                // this.entity$ = this.store.select(fromEn.getCurrentContact);
-                // this.entity$ = this.store.pipe(select('entity')) as Observable<Entity>;
-            } else {
-                this.title = 'Adauga entitate';
-            }
-        });
-    }
-
-    // // listen for changes on the entire form
-    // onChanges(): void {
-    //     this.entityForm.valueChanges.subscribe(val => {
-    //         this.getFirstErr = `Hello,
-    //       My name is ${val.firstName} and my email is ${val.email}.`;
-    //     });
-    // }
-
-    // listen for changes on on specific form control
-    // onChanges(): void {
-    //     this.entityForm.get('email').valueChanges.subscribe(val => {
-    //         console.log(this.entityForm.get('email').errors);
-
-    //         const errors = this.entityForm.get('email').errors;
-    //         if (errors) {
-    //             const k = Object.keys(this.entityForm.get('email').errors);
-    //             // if (k && k.length > 0) {
-    //             //     console.log(k[0]);
-    //             // }
-    //             this.getFirstErr = `My first err is ${k[0]}.`;
-    //         }
-
-    //         // this.getFirstErr = `My email is ${val}.`;
-
-    //         // Object.keys(this.field.errors).forEach(key => {
-    //         // console.log(key);
-    //         // return key;
-    //         // });
-    //     });
-    // }
-
-    // https://github.com/ngrx/platform/blob/master/example-app/app/books/containers/view-book-page.component.ts
-    ngOnDestroy() {
-        this.actionsSubscription.unsubscribe();
-    }
+        // as navigation to another page is a side effect, I prefer to do that redirection inside as an "Effect"
+        // this.router.navigate(['/entities', entity._id]);
+        this.store.dispatch(new EntityActions.GoToEntity(entity._id));
+    };
 }

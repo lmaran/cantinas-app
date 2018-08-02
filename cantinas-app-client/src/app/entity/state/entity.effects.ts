@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable, of } from 'rxjs';
-import { mergeMap, map, catchError, delay, tap } from 'rxjs/operators';
+import { mergeMap, map, catchError, delay, tap, switchMap } from 'rxjs/operators';
 
 import { EntityService } from '../../core/services/entity.service';
 
@@ -31,12 +31,18 @@ export class EntityEffects {
     getOneEntity$: Observable<Action> = this.actions$.pipe(
         ofType(entityActions.EntityActionTypes.GET_ONE),
         map((action: entityActions.GetOne) => action.payload),
-        mergeMap((entityId: string) =>
-            this.entityService.getEntityById(entityId).pipe(
-                map(entity => new entityActions.GetOneSuccess(entity)),
-                catchError(err => of(new entityActions.GetOneFail(err)))
-            )
-        )
+
+        // ok too
+        // mergeMap((entityId: string) =>
+        //     this.entityService.getEntityById(entityId).pipe(
+        //         map(entity => new entityActions.GetOneSuccess(entity)),
+        //         catchError(err => of(new entityActions.GetOneFail(err)))
+        //     )
+        // )
+
+        // https://github.com/avatsaev/angular-contacts-app-example
+        switchMap(entityId => this.entityService.getEntityById(entityId)),
+        map((entity: Entity) => new entityActions.GetOneSuccess(entity))
     );
 
     @Effect()
