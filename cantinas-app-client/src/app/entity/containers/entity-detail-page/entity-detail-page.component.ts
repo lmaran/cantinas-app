@@ -1,12 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
-import { ClrLoadingState } from '@clr/angular';
 
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as EntityActions from '../../state/entity.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
-import { ExtendedAppState } from '../../state/entity.interfaces';
+import { Observable } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-entity-detail-page',
@@ -15,55 +15,25 @@ import { ExtendedAppState } from '../../state/entity.interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityDetailPageComponent implements OnInit {
-    // newEntity: Entity = new Entity();
+    entity$: Observable<Entity>;
 
-    entities$: Observable<Entity[]>;
-    loading$: Observable<boolean>;
+    title: string;
 
-    // selectedEntity: Entity = new Entity();
-    // title: string;
-    // categoryList: any;
-
-    refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
-
-    constructor(private store: Store<ExtendedAppState>) {}
+    constructor(private store: Store<ExtendedAppState>, private route: ActivatedRoute) {}
 
     ngOnInit() {
-        this.entities$ = this.store.select(EntitySelectors.getEntities);
-        this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
-        this.store.dispatch(new EntityActions.GetAll());
+        this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
+
+        // const id: string = this.route.snapshot.params.id;
+
+        // // https://github.com/ngrx/platform/blob/master/example-app/app/books/containers/view-book-page.component.ts
+        // this.actionsSubscription = this.route.params
+        //     .pipe(map(params => new EntityActions.GetOne(params.id)))
+        //     .subscribe(this.store);
+
+        // https://github.com/avatsaev/angular-contacts-app-example
+        this.route.params.subscribe(params => {
+            this.store.dispatch(new EntityActions.GetOne(params.id));
+        });
     }
-
-    refreshEntityList() {
-        this.store.dispatch(new EntityActions.GetAll());
-    }
-
-    // getEntityList() {
-    //     this.entityService.getAllEntities().subscribe(entities => {
-    //         this.entities = entities.map(x => {
-    //             const newCategory = this.categoryList.find(c => c.value === x.category);
-    //             if (newCategory) {
-    //                 x.category = newCategory.label;
-    //             }
-    //             return x;
-    //         });
-
-    //         if (this.refreshBtnState === ClrLoadingState.LOADING) {
-    //             this.refreshBtnState = ClrLoadingState.SUCCESS;
-    //         }
-    //     });
-    // }
-
-    deleteEntity = function(entity) {
-        this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
-    };
-
-    editEntity = function(entity) {
-        // un-comment below line as needed
-        // this.store.dispatch(new EntityActions.SetCurrentEntityId(entity._id));
-
-        // as navigation to another page is a side effect, I prefer to do that redirection inside as an "Effect"
-        // this.router.navigate(['/entities', entity._id]);
-        this.store.dispatch(new EntityActions.GoToEntity(entity._id));
-    };
 }

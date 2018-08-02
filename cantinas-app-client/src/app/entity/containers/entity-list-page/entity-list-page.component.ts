@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
 import { ClrLoadingState } from '@clr/angular';
 
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
@@ -20,6 +20,8 @@ export class EntityListPageComponent implements OnInit {
     entities$: Observable<Entity[]>;
     loading$: Observable<boolean>;
 
+    test1: string;
+
     // selectedEntity: Entity = new Entity();
     // title: string;
     // categoryList: any;
@@ -32,6 +34,10 @@ export class EntityListPageComponent implements OnInit {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
         this.store.dispatch(new EntityActions.GetAll());
+
+        this.test1 = 'house';
+
+        of('tower').subscribe(x => (this.test1 = x));
     }
 
     refreshEntityList() {

@@ -9,6 +9,9 @@ import { AppModalComponent } from '../../../shared/components/confirmDelete/conf
 })
 export class EntityListComponent {
     @Input() entities: Entity[];
+
+    @Input() test1: string;
+
     @Input() loading = false;
     @Output() delete = new EventEmitter<Entity>();
     @Output() edit = new EventEmitter<Entity>();
@@ -25,4 +28,15 @@ export class EntityListComponent {
     editEntity = function(entity: Entity) {
         this.edit.emit(entity);
     };
+
+    // constructor() {
+    //     console.log('12345-' + this.test);
+    //     // console.log(this.entities);
+    // }
+
+    // tslint:disable-next-line:use-life-cycle-interface
+    ngOnInit() {
+        console.log(this.test1);
+        console.log(this.entities);
+    }
 }
