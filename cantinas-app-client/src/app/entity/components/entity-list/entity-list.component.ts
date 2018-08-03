@@ -36,7 +36,7 @@ export class EntityListComponent {
 
     // tslint:disable-next-line:use-life-cycle-interface
     ngOnInit() {
-        console.log(this.test1);
-        console.log(this.entities);
+        // console.log(this.test1);
+        // console.log(this.entities);
     }
 }

@@ -157,19 +157,17 @@ export class EntityDetailComponent implements OnInit, OnChanges {
         }
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        // patch form with value from the store
-        if (changes.entity && changes.entity.currentValue) {
-            const entity: any = changes.entity.currentValue as Entity;
-            // this.displayProduct(product);
-            console.log('1234');
-            console.log(entity);
-
-            this.displayProduct(entity);
-        }
+    // patch form with value from the store
+    // https://github.com/avatsaev/angular-contacts-app-example/.../contact-form.component.ts
+    // https://github.com/DeborahK/Angular-NgRx-GettingStarted/.../product-edit.component.ts
+    ngOnChanges(changes: SimpleChanges) {
+        // ensure to fire only once: https://stackoverflow.com/a/46975540/2726725
+        // if (!changes['entity'].isFirstChange()) {
+        console.log(this.entity);
+        this.displayProduct(this.entity);
+        // }
     }
 
-    // https://github.com/DeborahK/Angular-NgRx-GettingStarted/
     displayProduct(entity: Entity | null): void {
         // Set the local product property
         this.entity = entity;
@@ -187,10 +185,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
 
             // Update the data on the form
             this.entityForm.patchValue({
-                displayName: entity.displayName,
-                pluralName: entity.pluralName,
-                uniqueName: entity.uniqueName,
-                description: entity.description,
+                ...entity,
             });
         }
     }
