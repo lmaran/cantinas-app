@@ -78,8 +78,14 @@ export class EntityEffects {
     // https://github.com/orizens/echoes-player/blob/master/src/app/core/effects/router.effects.ts
 
     @Effect({ dispatch: false })
-    goToEntity$: Observable<Action> = this.actions$.pipe(
-        ofType(entityActions.EntityActionTypes.GO_TO_ENTITY),
-        tap((action: entityActions.GoToEntity) => this.router.navigate(['/entities/' + action.payload]))
+    goToEditEntity$: Observable<Action> = this.actions$.pipe(
+        ofType(entityActions.EntityActionTypes.GO_TO_EDIT_ENTITY),
+        tap((action: entityActions.GoToEditEntity) => this.router.navigate(['/entities/' + action.payload]))
+    );
+
+    @Effect({ dispatch: false })
+    goToAddEntity$: Observable<Action> = this.actions$.pipe(
+        ofType(entityActions.EntityActionTypes.GO_TO_ADD_ENTITY),
+        tap(() => this.router.navigate(['/entities/add']))
     );
 }

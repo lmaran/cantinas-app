@@ -16,97 +16,53 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     entityForm: FormGroup;
     title: string;
     private formSubmitAttempt: boolean;
-    categoryList: any;
 
-    constructor(
-        private formBuilder: FormBuilder,
-        // private entityService: EntityService,
-        private location: Location,
-        public renderer2: Renderer2
-    ) {
-        // console.log(this.entity);
-        // this.createForm();
-    }
-
-    // createForm() {
-    //     this.entityForm = this.formBuilder.group({
-    //         displayName: ['', [Validators.required, Validators.minLength(3)]],
-    //         pluralName: ['', [Validators.required, Validators.minLength(3)]],
-    //         uniqueName: ['', [Validators.required, Validators.minLength(3)]],
-
-    //         description: ['', [Validators.required]],
-    //     });
-    // }
-
-    isFieldInvalid(field: string) {
-        return !this.entityForm.get(field).valid && this.formSubmitAttempt;
-    }
-
-    // // https://loiane.com/2017/08/angular-reactive-forms-trigger-validation-on-submit
-    // validateAllFormFields(formGroup: FormGroup) {
-    //     Object.keys(formGroup.controls).forEach(field => {
-    //         const control = formGroup.get(field);
-    //         if (control instanceof FormControl) {
-    //             control.markAsTouched({ onlySelf: true });
-    //             console.log(field); // firstName, email
-    //             console.log(control.errors); // {required:true, email:true}
-
-    //             if (control.errors && control.errors.required) {
-    //                 const propertyName = 'required';
-    //                 const err = ValidationService.getValidatorErrorMessage(propertyName, control.errors[propertyName]);
-    //                 console.log(err);
-    //             } else if (control.errors && control.errors.email) {
-    //                 const propertyName = 'email';
-    //                 const err = ValidationService.getValidatorErrorMessage(propertyName, control.errors[propertyName]);
-    //                 console.log(err);
-    //             } else {
-    //             }
-
-    //             console.log('------------------');
-    //         } else if (control instanceof FormGroup) {
-    //             this.validateAllFormFields(control);
-    //         }
-    //     });
-    // }
-
-    // onSubmit() {
-    //     this.formSubmitAttempt = true;
-
-    //     // if (this.entityForm.invalid) {
-    //     //     return;
-    //     // }
-
-    //     const entity = this.entityForm.value;
-    //     this.submitted = true;
-
-    //     if (this.isEditMode) {
-    //         entity._id = this.entity._id;
-
-    //         // this.entityService.updateEntity(entity).subscribe(saved => {
-    //         //     this.router.navigate(['/entities']);
-    //         // });
-    //     } else {
-    //         // this.entityService.createEntity(entity).subscribe(saved => {
-    //         //     // this.router.navigate(['/entities']);
-    //         // });
-    //         // this.store.dispatch(new EntityActions.AddEntity(entity));
-    //     }
-    // }
-
-    goBack() {
-        // https://stackoverflow.com/a/36470719
-        this.location.back();
-    }
-
-    // reset() {
-    //     this.entityForm.reset();
-    //     this.formSubmitAttempt = false;
-    // }
+    constructor(private formBuilder: FormBuilder, public renderer2: Renderer2) {}
 
     ngOnInit() {
-        // console.log(this.entity);
-        // this.createForm();
+        this.createForm();
 
+        // focus on first field https://stackoverflow.com/a/34573219/2726725
+        this.renderer2.selectRootElement('#entityName').focus();
+    }
+
+    // the source of 'this.entity' (in parent container) is an Observable (stream)
+    // => this value can be visible in UI (<pre>{{entity | json}}</pre>) but not available in Constructor or ngOnInit()
+    // => we have to access this value later, in ngOnChanges. See also:
+    // https://github.com/avatsaev/angular-contacts-app-example/.../contact-form.component.ts
+    // https://github.com/DeborahK/Angular-NgRx-GettingStarted/.../product-edit.component.ts
+    // https://github.com/blove/ngrx-tour-of-heros/.../edit-power.component.ts
+
+    // Also, ensure that actions inside this method are fired only once (based on below)
+
+    // 'add page' -> ngOnChanges() fires only once (before ngOnInit()) -> currentValue = null
+    //      - applicable for both AppNav and PageReload
+    // 'edit page' -> ngOnChanges() fires two times (before and after ngOnInit()) -> currentValue = ... it depends:
+    //
+    //      Page | From       | Fires | currentVal  | previousVal | firstChange | Notes
+    //      ========================================================================================================================
+    //      Add  | AppNav     | 1     | null        | undefined   | true        | ok
+    //      Add  | PageReload | 1     | null        | undefined   | true        | ok
+    //
+    //      Edit | AppNav     | 1     | {..}        | undefined   | true        | ignore (fires before onInit -> entityForm = undef.)
+    //           |            | 2     | {..}        | {..}        | false       | ok
+    //      Edit | PageReload | 1     | undefined   | undefined   | true        | ignore (fires before onInit -> entityForm = undef.)
+    //           |            | 2     | {..}        | undefined   | false       | ok
+    //
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['entity'].currentValue === null) {
+            this.title = 'Adauga entitate';
+        } else {
+            // ensure it fires only once (and after ngOnInit) ... se comments above
+            if (!changes['entity'].firstChange) {
+                this.title = `Editeaza entitate: ${this.entity.displayName}`;
+                this.isEditMode = true;
+                this.populateForm(this.entity);
+            }
+        }
+    }
+
+    createForm() {
         this.entityForm = this.formBuilder.group({
             displayName: ['', [Validators.required, Validators.minLength(3)]],
             pluralName: ['', [Validators.required, Validators.minLength(3)]],
@@ -114,110 +70,15 @@ export class EntityDetailComponent implements OnInit, OnChanges {
 
             description: ['', [Validators.required]],
         });
-
-        this.categoryList = [
-            { label: '' },
-            { value: '1', label: 'Supa' },
-            { value: '2', label: 'Felul doi' },
-            { value: '3', label: 'Salata' },
-            { value: '4', label: 'Desert' },
-        ];
-
-        // focus on first field https://stackoverflow.com/a/34573219/2726725
-        this.renderer2.selectRootElement('#entityName').focus();
-
-        // or ...https://github.com/rogerpadilla/angular2-minimalist-starter/blob/master/src/app/question/question-form.component.ts
-        // const id = this.route.snapshot.params['id'];
-
-        const entityTmp = this.entity;
-
-        const id = entityTmp && entityTmp._id;
-        if (id) {
-            this.isEditMode = true;
-            // this.title = 'Editeaza entitate';
-
-            // this.entityService.getEntityById(id.toString()).subscribe((entity: any) => {
-            //     this.entity = entity;
-            //     this.entityForm.reset({
-            //         displayName: entity.displayName,
-            //         pluralName: entity.pluralName,
-            //         uniqueName: entity.uniqueName,
-            //         description: entity.description,
-            //     });
-            // });
-
-            // this.entityForm.reset({
-            //     displayName: entityTmp.displayName,
-            //     pluralName: entityTmp.pluralName,
-            //     uniqueName: entityTmp.uniqueName,
-            //     description: entityTmp.description,
-            // });
-        } else {
-            // this.title = 'Adauga entitate';
-        }
     }
 
-    // patch form with value from the store
-    // https://github.com/avatsaev/angular-contacts-app-example/.../contact-form.component.ts
-    // https://github.com/DeborahK/Angular-NgRx-GettingStarted/.../product-edit.component.ts
-    ngOnChanges(changes: SimpleChanges) {
-        // ensure to fire only once: https://stackoverflow.com/a/46975540/2726725
-        // if (!changes['entity'].isFirstChange()) {
-        console.log(this.entity);
-        this.displayProduct(this.entity);
-        // }
+    populateForm(entity: Entity) {
+        this.entityForm.patchValue({
+            ...entity,
+        });
     }
 
-    displayProduct(entity: Entity | null): void {
-        // Set the local product property
-        this.entity = entity;
-
-        if (this.entity && this.entityForm) {
-            // Reset the form back to pristine
-            this.entityForm.reset();
-
-            // Display the appropriate page title
-            if (!this.entity._id) {
-                this.title = 'Adauga entitate';
-            } else {
-                this.title = `Editeaza entitate: ${this.entity.displayName}`;
-            }
-
-            // Update the data on the form
-            this.entityForm.patchValue({
-                ...entity,
-            });
-        }
+    isFieldInvalid(field: string) {
+        return !this.entityForm.get(field).valid && this.formSubmitAttempt;
     }
-
-    // // listen for changes on the entire form
-    // onChanges(): void {
-    //     this.entityForm.valueChanges.subscribe(val => {
-    //         this.getFirstErr = `Hello,
-    //       My name is ${val.firstName} and my email is ${val.email}.`;
-    //     });
-    // }
-
-    // listen for changes on on specific form control
-    // onChanges(): void {
-    //     this.entityForm.get('email').valueChanges.subscribe(val => {
-    //         console.log(this.entityForm.get('email').errors);
-
-    //         const errors = this.entityForm.get('email').errors;
-    //         if (errors) {
-    //             const k = Object.keys(this.entityForm.get('email').errors);
-    //             // if (k && k.length > 0) {
-    //             //     console.log(k[0]);
-    //             // }
-    //             this.getFirstErr = `My first err is ${k[0]}.`;
-    //         }
-
-    //         // this.getFirstErr = `My email is ${val}.`;
-
-    //         // Object.keys(this.field.errors).forEach(key => {
-    //         // console.log(key);
-    //         // return key;
-    //         // });
-    //     });
-    // }
 }

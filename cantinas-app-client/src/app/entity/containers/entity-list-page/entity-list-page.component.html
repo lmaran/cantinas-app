@@ -1,6 +1,6 @@
 <h1>{{title}}</h1>
 
-<button class="btn btn-primary" [routerLink]="['/entities/add']">
+<button class="btn btn-primary" (click)="goToAddEntity()">
     <clr-icon shape="plus"></clr-icon>
     Adauga entitate
 </button>
@@ -11,4 +11,4 @@
 </button>
 
 <app-entity-list [test1]="test1" [entities]="entities$ | async" [loading]="loading$ | async" (delete)="deleteEntity($event)"
-    (edit)="editEntity($event)"></app-entity-list>
+    (edit)="goToEditEntity($event)"></app-entity-list>

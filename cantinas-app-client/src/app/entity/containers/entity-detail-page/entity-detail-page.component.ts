@@ -34,6 +34,7 @@ export class EntityDetailPageComponent implements OnInit {
         // https://github.com/avatsaev/angular-contacts-app-example
         this.route.params.subscribe(params => {
             // console.log('id: ' + params.id);
+            // console.log(params);
             if (params.id) {
                 this.store.dispatch(new EntityActions.GetOne(params.id));
             }

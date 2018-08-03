@@ -64,12 +64,16 @@ export class EntityListPageComponent implements OnInit {
         this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
     };
 
-    editEntity = function(entity) {
+    goToEditEntity = function(entity) {
         // un-comment below line as needed
         // this.store.dispatch(new EntityActions.SetCurrentEntityId(entity._id));
 
         // as navigation to another page is a side effect, I prefer to do that redirection inside as an "Effect"
         // this.router.navigate(['/entities', entity._id]);
-        this.store.dispatch(new EntityActions.GoToEntity(entity._id));
+        this.store.dispatch(new EntityActions.GoToEditEntity(entity._id));
+    };
+
+    goToAddEntity = function() {
+        this.store.dispatch(new EntityActions.GoToAddEntity());
     };
 }
