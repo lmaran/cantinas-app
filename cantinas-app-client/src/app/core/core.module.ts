@@ -8,6 +8,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // modules (app)
 import { SharedModule } from '../shared/shared.module'; // we need clarity for home, about or layout components
@@ -31,6 +34,12 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { DishListComponent } from './components/dish/dish-list/dish-list.component';
 import { DishDetailComponent } from './components/dish/dish-detail/dish-detail.component';
+import { RouterEffects } from './state/effects/router.effects';
+import { EffectsModule } from '@ngrx/effects';
+
+import { environment } from '../../environments/environment';
+import { CustomSerializer } from './state/serializer';
+import { reducers } from './state/reducers';
 
 export const COMPONENTS = [
     Layout2Component,
@@ -47,7 +56,21 @@ export const COMPONENTS = [
 ];
 
 @NgModule({
-    imports: [RouterModule, BrowserModule, BrowserAnimationsModule, HttpClientModule, SharedModule],
+    imports: [
+        RouterModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        SharedModule,
+
+        StoreModule.forRoot(reducers, {}),
+
+        // integrates Angular router with NgRx DevTool
+        StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
+
+        EffectsModule.forRoot([RouterEffects]),
+        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
+    ],
     declarations: [...COMPONENTS],
     exports: [...COMPONENTS],
 })
@@ -64,6 +87,7 @@ export class CoreModule {
                 ValidationService,
                 EntityService,
                 AuthenticationService,
+                { provide: RouterStateSerializer, useClass: CustomSerializer },
             ],
         };
     }

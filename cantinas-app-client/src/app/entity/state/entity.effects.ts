@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Observable, of } from 'rxjs';
 import { mergeMap, map, catchError, delay, tap, switchMap } from 'rxjs/operators';
@@ -13,7 +14,12 @@ import { Entity } from '../../core/models/entity';
 
 @Injectable()
 export class EntityEffects {
-    constructor(private entityService: EntityService, private actions$: Actions, private router: Router) {}
+    constructor(
+        private entityService: EntityService,
+        private actions$: Actions,
+        private router: Router,
+        private location: Location
+    ) {}
 
     @Effect()
     getAllEntities$: Observable<Action> = this.actions$.pipe(
@@ -67,25 +73,5 @@ export class EntityEffects {
                 catchError(err => of(new entityActions.DeleteEntityFail(err)))
             )
         )
-    );
-
-    // todo: refactor and move routing effects/actions to app level
-    // implement "go", "forward" and "back"
-    // help:
-    // https://github.com/ngrx/platform/blob/master/docs/router-store/api.md#effects
-    // https://github.com/amcdnl/ngrx-router + https://medium.com/@amcdnl/angular-routing-data-with-ngrx-effects-1cda1bd5e579
-    // https://angular.schule/blog/2018-06-5-useful-effects-without-actions
-    // https://github.com/orizens/echoes-player/blob/master/src/app/core/effects/router.effects.ts
-
-    @Effect({ dispatch: false })
-    goToEditEntity$: Observable<Action> = this.actions$.pipe(
-        ofType(entityActions.EntityActionTypes.GO_TO_EDIT_ENTITY),
-        tap((action: entityActions.GoToEditEntity) => this.router.navigate(['/entities/' + action.payload]))
-    );
-
-    @Effect({ dispatch: false })
-    goToAddEntity$: Observable<Action> = this.actions$.pipe(
-        ofType(entityActions.EntityActionTypes.GO_TO_ADD_ENTITY),
-        tap(() => this.router.navigate(['/entities/add']))
     );
 }

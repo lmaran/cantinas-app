@@ -102,13 +102,6 @@ export function reducer(state: EntityState = initialState, action: EntityActions
             };
         }
 
-        case EntityActionTypes.GO_TO_ADD_ENTITY: {
-            return {
-                ...state,
-                currentEntityId: null,
-            };
-        }
-
         // // const newState = state;
         // const newState = state.entities.filter(x => x._id !== action.payload);
 

@@ -18,6 +18,7 @@ import { EntityDetailComponent } from './components/entity-detail/entity-detail.
 // ngrx store
 import { reducer } from './state/entity.reducer';
 import { EntityEffects } from './state/entity.effects';
+// import { RouterEffects } from '../core/state/effects/router.effects';
 
 export const CONTAINERS = [EntityListPageComponent, EntityDetailPageComponent];
 export const COMPONENTS = [EntityListComponent, EntityDetailComponent];

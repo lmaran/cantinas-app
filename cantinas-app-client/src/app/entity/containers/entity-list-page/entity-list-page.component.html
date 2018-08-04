@@ -1,8 +1,14 @@
 <h1>{{title}}</h1>
 
-<button class="btn btn-primary" (click)="goToAddEntity()">
+<!-- <button class="btn btn-primary" (click)="goToAddEntity()"> -->
+<button class="btn btn-primary" [routerLink]="['/entities/add']" (click2)="goToAddEntity()">
     <clr-icon shape="plus"></clr-icon>
     Adauga entitate
+</button>
+
+<button class="btn btn-primary" (click)="goForward()">
+    <clr-icon shape="plus"></clr-icon>
+    Go Forward
 </button>
 
 <button type="button" [clrLoading]="refreshBtnState" class="btn btn-icon" (click)="refreshEntityList()">
@@ -10,5 +16,4 @@
     Refresh
 </button>
 
-<app-entity-list [test1]="test1" [entities]="entities$ | async" [loading]="loading$ | async" (delete)="deleteEntity($event)"
-    (edit)="goToEditEntity($event)"></app-entity-list>
+<app-entity-list [test1]="test1" [entities]="entities$ | async" [loading]="loading$ | async" (delete)="deleteEntity($event)"></app-entity-list>

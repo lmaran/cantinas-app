@@ -27,9 +27,6 @@ export enum EntityActionTypes {
     DELETE_FAIL = '[Entity] Delete Fail',
 
     SET_CURRENT_ENTITY_ID = '[Entity] Set current Id',
-
-    GO_TO_EDIT_ENTITY = '[Entity] Go to Edit',
-    GO_TO_ADD_ENTITY = '[Entity] Go to Add',
 }
 
 // update
@@ -114,17 +111,6 @@ export class SetCurrentEntityId implements Action {
     constructor(public payload: string) {}
 }
 
-// go to entity
-export class GoToEditEntity implements Action {
-    readonly type = EntityActionTypes.GO_TO_EDIT_ENTITY;
-
-    constructor(public payload: string) {}
-}
-
-export class GoToAddEntity implements Action {
-    readonly type = EntityActionTypes.GO_TO_ADD_ENTITY;
-}
-
 export type EntityActions =
     | DeleteEntity
     | GetAll
@@ -136,6 +122,4 @@ export type EntityActions =
     | DeleteEntity
     | DeleteEntitySuccess
     | DeleteEntityFail
-    | SetCurrentEntityId
-    | GoToEditEntity
-    | GoToAddEntity;
+    | SetCurrentEntityId;

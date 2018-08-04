@@ -4,6 +4,7 @@ import { Entity } from '../../../core/models/entity';
 import { Store } from '@ngrx/store';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as EntityActions from '../../state/entity.actions';
+import * as RouterActions from '../../../core/state/actions/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -41,4 +42,9 @@ export class EntityDetailPageComponent implements OnInit {
             // this.store.dispatch(new EntityActions.GetOne(params.id));
         });
     }
+
+    goBack = function() {
+        // this.store.dispatch(new EntityActions.GoBack());
+        this.store.dispatch(new RouterActions.Back());
+    };
 }

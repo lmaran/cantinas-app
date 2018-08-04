@@ -5,6 +5,7 @@ import { ClrLoadingState } from '@clr/angular';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
+import * as RouterActions from '../../../core/state/actions/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 
@@ -64,16 +65,12 @@ export class EntityListPageComponent implements OnInit {
         this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
     };
 
-    goToEditEntity = function(entity) {
-        // un-comment below line as needed
-        // this.store.dispatch(new EntityActions.SetCurrentEntityId(entity._id));
-
-        // as navigation to another page is a side effect, I prefer to do that redirection inside as an "Effect"
-        // this.router.navigate(['/entities', entity._id]);
-        this.store.dispatch(new EntityActions.GoToEditEntity(entity._id));
+    goForward = function() {
+        // this.store.dispatch(new EntityActions.GoForward());
+        this.store.dispatch(new RouterActions.Forward());
     };
 
     goToAddEntity = function() {
-        this.store.dispatch(new EntityActions.GoToAddEntity());
+        this.store.dispatch(new RouterActions.Go({ path: ['/entities/add'] }));
     };
 }

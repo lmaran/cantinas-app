@@ -14,7 +14,6 @@ export class EntityListComponent {
 
     @Input() loading = false;
     @Output() delete = new EventEmitter<Entity>();
-    @Output() edit = new EventEmitter<Entity>();
 
     // Don't forget to add this (child) component in the current html
     @ViewChild(AppModalComponent) modal: AppModalComponent;
@@ -23,10 +22,6 @@ export class EntityListComponent {
         this.modal.open(`${entity.displayName}`, () => {
             this.delete.emit(entity);
         });
-    };
-
-    editEntity = function(entity: Entity) {
-        this.edit.emit(entity);
     };
 
     // constructor() {
