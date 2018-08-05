@@ -9,8 +9,13 @@ const initialState: EntityState = {
     error: '',
 };
 
+let entityTmp: Entity;
+let entitiesTmp: Entity[];
+let idTmp: string;
+
 export function reducer(state: EntityState = initialState, action: EntityActions): EntityState {
     switch (action.type) {
+        // get all
         case EntityActionTypes.GET_ALL:
             return {
                 ...state,
@@ -18,10 +23,10 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 loading: true,
             };
         case EntityActionTypes.GET_ALL_SUCCESS:
-            const entities = <Entity[]>action.payload;
+            entitiesTmp = <Entity[]>action.payload;
             return {
                 ...state,
-                entities: entities.reduce((obj: { [id: string]: Entity }, item: Entity) => {
+                entities: entitiesTmp.reduce((obj: { [id: string]: Entity }, item: Entity) => {
                     obj[item._id] = item;
                     return obj;
                 }, {}),
@@ -37,23 +42,24 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 error: action.payload,
             };
 
+        // get one
         case EntityActionTypes.GET_ONE:
-            const id2 = <string>action.payload;
+            idTmp = <string>action.payload;
             return {
                 ...state,
-                currentEntityId: id2,
+                currentEntityId: idTmp,
                 loading: false,
                 error: '',
             };
 
         case EntityActionTypes.GET_ONE_SUCCESS:
-            const entity = <Entity>action.payload;
+            entityTmp = action.payload;
             return {
                 ...state,
-                currentEntityId: entity._id,
+                currentEntityId: entityTmp._id,
                 entities: {
                     ...state.entities,
-                    [entity._id]: entity,
+                    [entityTmp._id]: entityTmp,
                 },
                 loading: false,
                 error: '',
@@ -66,22 +72,19 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 loading: false,
                 error: action.payload,
             };
-        // case EntityActions.ADD_ENTITY:
-        //     return [...state, action.payload];
 
+        // delete
         case EntityActionTypes.DELETE:
             // https://coderwall.com/p/xrssxg/immutable-way-to-delete-a-key-from-an-object
             // https://stackoverflow.com/a/47227198/2726725
-            const id = action.payload;
-            const { [id]: deleted, ...newEntities } = state.entities;
+            idTmp = action.payload;
+            const { [idTmp]: deleted, ...newEntities } = state.entities;
             return {
                 ...state,
-                // entities: state.entities.filter(x => x._id !== action.payload),
                 entities: newEntities,
                 error: '',
             };
 
-        // After a delete, the currentEntity is null.
         case EntityActionTypes.DELETE_SUCCESS:
             return {
                 ...state,
@@ -96,6 +99,26 @@ export function reducer(state: EntityState = initialState, action: EntityActions
                 error: action.payload,
             };
 
+        // update
+        case EntityActionTypes.UPDATE_SUCCESS:
+            entityTmp = action.payload;
+            return {
+                ...state,
+                entities: {
+                    ...state.entities,
+                    [entityTmp._id]: entityTmp,
+                },
+                currentEntityId: entityTmp._id,
+                error: '',
+            };
+
+        case EntityActionTypes.UPDATE_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+            };
+
+        // setCurent
         case EntityActionTypes.SET_CURRENT_ENTITY_ID: {
             return {
                 ...state,
@@ -103,10 +126,6 @@ export function reducer(state: EntityState = initialState, action: EntityActions
             };
         }
 
-        // // const newState = state;
-        // const newState = state.entities.filter(x => x._id !== action.payload);
-
-        // return newState;
         default:
             return state;
     }

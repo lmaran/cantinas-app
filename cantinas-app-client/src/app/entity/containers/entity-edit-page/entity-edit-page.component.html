@@ -13,4 +13,4 @@
     Go Back
 </button>
 
-<app-entity-detail [entity]="entity$ | async"></app-entity-detail>
+<app-entity-detail (update)="updateEntity($event)" [entity]=" entity$ | async"></app-entity-detail>

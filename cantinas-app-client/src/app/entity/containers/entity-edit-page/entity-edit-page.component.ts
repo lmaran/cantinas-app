@@ -1,13 +1,14 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { Entity } from '../../../core/models/entity';
 
-import { Store } from '@ngrx/store';
+import { Store, ActionsSubject } from '@ngrx/store';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as EntityActions from '../../state/entity.actions';
 import * as RouterActions from '../../../core/state/actions/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
-import { Observable } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ofType } from '@ngrx/effects';
 
 @Component({
     selector: 'app-entity-edit-page',
@@ -15,12 +16,18 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./entity-edit-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntityEditPageComponent implements OnInit {
+export class EntityEditPageComponent implements OnInit, OnDestroy {
     entity$: Observable<Entity>;
+    redirectSub$: Subscription;
 
     title: string;
 
-    constructor(private store: Store<ExtendedAppState>, private route: ActivatedRoute) {}
+    constructor(
+        private store: Store<ExtendedAppState>,
+        private route: ActivatedRoute,
+        private actionsSubject: ActionsSubject,
+        private router: Router
+    ) {}
 
     ngOnInit() {
         this.title = 'Editeaza entitate';
@@ -35,17 +42,29 @@ export class EntityEditPageComponent implements OnInit {
 
         // https://github.com/avatsaev/angular-contacts-app-example
         this.route.params.subscribe(params => {
-            // console.log('id: ' + params.id);
-            // console.log(params);
             if (params.id) {
                 this.store.dispatch(new EntityActions.GetOne(params.id));
             }
-            // this.store.dispatch(new EntityActions.GetOne(params.id));
         });
+
+        // after update redirect to /entities ...don't forget to unsubscribe
+        // https://github.com/avatsaev/angular-contacts-app-example/blob/master/src/app/views/contacts/contact-new/contact-new.component.ts
+        this.redirectSub$ = this.actionsSubject
+            .asObservable()
+            .pipe(ofType(EntityActions.EntityActionTypes.UPDATE_SUCCESS))
+            .subscribe((action: EntityActions.UpdateEntitySuccess) => this.router.navigate(['/entities']));
+    }
+
+    updateEntity(entity: Entity): void {
+        console.log(333);
+        this.store.dispatch(new EntityActions.UpdateEntity(entity));
     }
 
     goBack = function() {
-        // this.store.dispatch(new EntityActions.GoBack());
         this.store.dispatch(new RouterActions.Back());
     };
+
+    ngOnDestroy() {
+        this.redirectSub$.unsubscribe();
+    }
 }

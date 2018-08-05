@@ -122,4 +122,7 @@ export type EntityActions =
     | DeleteEntity
     | DeleteEntitySuccess
     | DeleteEntityFail
-    | SetCurrentEntityId;
+    | SetCurrentEntityId
+    | UpdateEntity
+    | UpdateEntitySuccess
+    | UpdateEntityFail;

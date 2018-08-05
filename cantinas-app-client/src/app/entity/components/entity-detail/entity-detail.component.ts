@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Renderer2, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { Entity } from '../../../core/models/entity';
@@ -10,7 +10,11 @@ import { Entity } from '../../../core/models/entity';
 })
 export class EntityDetailComponent implements OnInit, OnChanges {
     @Input() entity: Entity;
-    isEditMode: boolean;
+    // isEditMode: boolean;
+
+    @Output() create = new EventEmitter<Entity>();
+    @Output() update = new EventEmitter<Entity>();
+
     submitted: boolean;
     entityForm: FormGroup;
     title: string;
@@ -77,7 +81,6 @@ export class EntityDetailComponent implements OnInit, OnChanges {
             displayName: ['', [Validators.required, Validators.minLength(3)]],
             pluralName: ['', [Validators.required, Validators.minLength(3)]],
             uniqueName: ['', [Validators.required, Validators.minLength(3)]],
-
             description: ['', [Validators.required]],
         });
     }
@@ -90,5 +93,28 @@ export class EntityDetailComponent implements OnInit, OnChanges {
 
     isFieldInvalid(field: string) {
         return !this.entityForm.get(field).valid && this.formSubmitAttempt;
+    }
+
+    saveEntity(): void {
+        // if (this.entityForm.valid) {
+        //     if (this.entityForm.dirty) {
+        // Copy over all of the original product properties
+        // Then copy over the values from the form
+        // This ensures values not on the form, such as the Id, are retained
+        const p: Entity = { ...this.entity, ...this.entityForm.value };
+
+        console.log(this.entity);
+        console.log(this.entityForm.value);
+        console.log(p);
+
+        if (p._id === undefined) {
+            this.create.emit(p);
+        } else {
+            this.update.emit(p);
+        }
+        //     }
+        // } else {
+        //     // this.errorMessage = 'Please correct the validation errors.';
+        // }
     }
 }
