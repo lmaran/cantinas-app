@@ -1,4 +1,4 @@
-import { AppState } from '../../core/state/app-state';
+import { AppState } from '../../core/state/app-state.interfaces';
 import { Entity } from '../../core/models/entity';
 
 // Extends the app state to include the entity feature.
