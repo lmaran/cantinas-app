@@ -9,7 +9,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
-import { StoreModule, MetaReducer } from '@ngrx/store';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // modules (app)
@@ -34,11 +35,11 @@ import { UserListComponent } from './components/user/user-list/user-list.compone
 import { UserDetailComponent } from './components/user/user-detail/user-detail.component';
 import { DishListComponent } from './components/dish/dish-list/dish-list.component';
 import { DishDetailComponent } from './components/dish/dish-detail/dish-detail.component';
-import { RouterEffects } from './state/effects/router.effects';
-import { EffectsModule } from '@ngrx/effects';
 
+// others
 import { environment } from '../../environments/environment';
-import { CustomSerializer } from './state/serializer';
+import { RouterEffects } from './state/effects/router.effects';
+import { CustomSerializer } from './state/router-state.serializer';
 import { reducers, metaReducers } from './state/reducers';
 
 export const COMPONENTS = [
@@ -62,14 +63,14 @@ export const COMPONENTS = [
         BrowserAnimationsModule,
         HttpClientModule,
         SharedModule,
-
         StoreModule.forRoot(reducers, { metaReducers }),
+        EffectsModule.forRoot([RouterEffects]),
+
+        // enable NgRx DevTool
+        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
 
         // integrates Angular router with NgRx DevTool
         StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
-
-        EffectsModule.forRoot([RouterEffects]),
-        !environment.production ? StoreDevtoolsModule.instrument({ maxAge: 50 }) : [],
     ],
     declarations: [...COMPONENTS],
     exports: [...COMPONENTS],

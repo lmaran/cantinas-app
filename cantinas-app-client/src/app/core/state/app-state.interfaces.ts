@@ -1,8 +1,7 @@
 import * as fromRouter from '@ngrx/router-store';
 
-export interface RouteState {
-    path: string;
-}
+// Representation of the entire app state
+// Extended by lazy loaded modules
 export interface AppState {
     router: fromRouter.RouterReducerState;
 }

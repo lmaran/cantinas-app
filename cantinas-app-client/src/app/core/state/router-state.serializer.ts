@@ -1,14 +1,10 @@
 import { Params, RouterStateSnapshot } from '@angular/router';
-import { RouterReducerState, RouterStateSerializer } from '@ngrx/router-store';
+import { RouterStateSerializer } from '@ngrx/router-store';
 
 export interface RouterStateUrl {
     url: string;
     params: Params;
     queryParams: Params;
-}
-
-export interface State {
-    router: RouterReducerState<RouterStateUrl>;
 }
 
 // https://github.com/ngrx/platform/blob/master/docs/router-store/api.md#custom-router-state-serializer
