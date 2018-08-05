@@ -10,12 +10,12 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-    selector: 'app-entity-detail-page',
-    templateUrl: './entity-detail-page.component.html',
-    styleUrls: ['./entity-detail-page.component.scss'],
+    selector: 'app-entity-edit-page',
+    templateUrl: './entity-edit-page.component.html',
+    styleUrls: ['./entity-edit-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EntityDetailPageComponent implements OnInit {
+export class EntityEditPageComponent implements OnInit {
     entity$: Observable<Entity>;
 
     title: string;
@@ -23,6 +23,7 @@ export class EntityDetailPageComponent implements OnInit {
     constructor(private store: Store<ExtendedAppState>, private route: ActivatedRoute) {}
 
     ngOnInit() {
+        this.title = 'Editeaza entitate';
         this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
 
         // const id: string = this.route.snapshot.params.id;

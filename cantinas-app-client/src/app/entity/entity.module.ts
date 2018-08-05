@@ -9,7 +9,8 @@ import { EntityRoutingModule } from './entity-routing.module';
 
 // containers (smart)
 import { EntityListPageComponent } from './containers/entity-list-page/entity-list-page.component';
-import { EntityDetailPageComponent } from './containers/entity-detail-page/entity-detail-page.component';
+import { EntityCreatePageComponent } from './containers/entity-create-page/entity-create-page.component';
+import { EntityEditPageComponent } from './containers/entity-edit-page/entity-edit-page.component';
 
 // components (pure)
 import { EntityListComponent } from './components/entity-list/entity-list.component';
@@ -20,7 +21,7 @@ import { reducer } from './state/entity.reducer';
 import { EntityEffects } from './state/entity.effects';
 // import { RouterEffects } from '../core/state/effects/router.effects';
 
-export const CONTAINERS = [EntityListPageComponent, EntityDetailPageComponent];
+export const CONTAINERS = [EntityListPageComponent, EntityCreatePageComponent, EntityEditPageComponent];
 export const COMPONENTS = [EntityListComponent, EntityDetailComponent];
 
 @NgModule({

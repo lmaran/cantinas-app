@@ -1,0 +1,16 @@
+<!-- <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="!entityForm.valid && formSubmitAttempt">
+    <div class="alert-item">
+        <span class="alert-text">
+            Formular invalid. Corecteaza informatiile din campurile marcate.
+        </span>
+    </div>
+</clr-alert> -->
+
+<h1>{{title}}</h1>
+
+<button class="btn btn-primary" (click)="goBack()">
+    <clr-icon shape="plus"></clr-icon>
+    Go Back
+</button>
+
+<app-entity-detail></app-entity-detail>

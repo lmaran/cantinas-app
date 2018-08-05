@@ -1,6 +1,5 @@
 import { Component, OnInit, Renderer2, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
 import { Entity } from '../../../core/models/entity';
 
@@ -51,19 +50,27 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     //           |            | 2     | {..}        | undefined   | false       | ok
     //
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['entity'].firstChange) {
-            if (changes['entity'].currentValue === null) {
-                this.title = 'Adauga entitate';
-            } else {
-                this.isEditMode = true;
-                this.title = 'Editeaza entitate';
-            }
-        } else {
-            // ensure it fires only once (and after ngOnInit) ... se comments above
-            // this.title = `${this.title}: ${this.entity.displayName}`; // optional
+        // it fires only for "edit" (not for "create"...@input is not sent in this case)
+        // ensure it fires only once (and after ngOnInit). Se comments above.
+        if (!changes['entity'].firstChange) {
             this.populateForm(this.entity);
         }
     }
+    // ngOnChanges(changes: SimpleChanges) {
+    //     console.log(changes);
+    //     if (changes['entity'].firstChange) {
+    //         if (changes['entity'].currentValue === null) {
+    //             this.title = 'Adauga entitate';
+    //         } else {
+    //             this.isEditMode = true;
+    //             this.title = 'Editeaza entitate';
+    //         }
+    //     } else {
+    //         // ensure it fires only once (and after ngOnInit) ... se comments above
+    //         // this.title = `${this.title}: ${this.entity.displayName}`; // optional
+    //         this.populateForm(this.entity);
+    //     }
+    // }
 
     createForm() {
         this.entityForm = this.formBuilder.group({

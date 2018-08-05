@@ -41,6 +41,6 @@ export class EntityListPageComponent implements OnInit {
     };
 
     // goToAddEntity = function() {
-    //     this.store.dispatch(new RouterActions.Go({ path: ['/entities/add'] }));
+    //     this.store.dispatch(new RouterActions.Go({ path: ['/entities/new'] }));
     // };
 }
