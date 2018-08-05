@@ -9,7 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
+import { StoreModule, MetaReducer } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 // modules (app)
@@ -39,7 +39,7 @@ import { EffectsModule } from '@ngrx/effects';
 
 import { environment } from '../../environments/environment';
 import { CustomSerializer } from './state/serializer';
-import { reducers } from './state/reducers';
+import { reducers, metaReducers } from './state/reducers';
 
 export const COMPONENTS = [
     Layout2Component,
@@ -63,7 +63,7 @@ export const COMPONENTS = [
         HttpClientModule,
         SharedModule,
 
-        StoreModule.forRoot(reducers, {}),
+        StoreModule.forRoot(reducers, { metaReducers }),
 
         // integrates Angular router with NgRx DevTool
         StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),

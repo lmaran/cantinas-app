@@ -1,6 +1,8 @@
+import * as fromRouter from '@ngrx/router-store';
+
 export interface RouteState {
     path: string;
 }
 export interface AppState {
-    currentRoute: RouteState;
+    router: fromRouter.RouterReducerState;
 }
