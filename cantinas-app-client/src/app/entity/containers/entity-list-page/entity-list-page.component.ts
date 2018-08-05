@@ -16,17 +16,8 @@ import { ExtendedAppState } from '../../state/entity.interfaces';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EntityListPageComponent implements OnInit {
-    // newEntity: Entity = new Entity();
-
     entities$: Observable<Entity[]>;
     loading$: Observable<boolean>;
-
-    test1: string;
-
-    // selectedEntity: Entity = new Entity();
-    // title: string;
-    // categoryList: any;
-
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
     constructor(private store: Store<ExtendedAppState>) {}
@@ -35,42 +26,21 @@ export class EntityListPageComponent implements OnInit {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
         this.store.dispatch(new EntityActions.GetAll());
-
-        this.test1 = 'house';
-
-        of('tower').subscribe(x => (this.test1 = x));
     }
 
     refreshEntityList() {
         this.store.dispatch(new EntityActions.GetAll());
     }
 
-    // getEntityList() {
-    //     this.entityService.getAllEntities().subscribe(entities => {
-    //         this.entities = entities.map(x => {
-    //             const newCategory = this.categoryList.find(c => c.value === x.category);
-    //             if (newCategory) {
-    //                 x.category = newCategory.label;
-    //             }
-    //             return x;
-    //         });
-
-    //         if (this.refreshBtnState === ClrLoadingState.LOADING) {
-    //             this.refreshBtnState = ClrLoadingState.SUCCESS;
-    //         }
-    //     });
-    // }
-
     deleteEntity = function(entity) {
         this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
     };
 
-    goForward = function() {
-        // this.store.dispatch(new EntityActions.GoForward());
-        this.store.dispatch(new RouterActions.Forward());
+    goBack = function() {
+        this.store.dispatch(new RouterActions.Back());
     };
 
-    goToAddEntity = function() {
-        this.store.dispatch(new RouterActions.Go({ path: ['/entities/add'] }));
-    };
+    // goToAddEntity = function() {
+    //     this.store.dispatch(new RouterActions.Go({ path: ['/entities/add'] }));
+    // };
 }
