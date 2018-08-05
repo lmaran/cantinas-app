@@ -32,6 +32,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     // https://github.com/avatsaev/angular-contacts-app-example/.../contact-form.component.ts
     // https://github.com/DeborahK/Angular-NgRx-GettingStarted/.../product-edit.component.ts
     // https://github.com/blove/ngrx-tour-of-heros/.../edit-power.component.ts
+    // https://www.concretepage.com/angular-2/angular-2-4-onchanges-simplechanges-example
 
     // Also, ensure that actions inside this method are fired only once (based on below)
 
@@ -41,7 +42,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     //
     //      Page | From       | Fires | currentVal  | previousVal | firstChange | Notes
     //      ========================================================================================================================
-    //      Add  | AppNav     | 1     | null        | undefined   | true        | ok
+    //      Add  | AppNav     | 1     | null        | undefined   | true        | ok (currentEntityId should be null in state)
     //      Add  | PageReload | 1     | null        | undefined   | true        | ok
     //
     //      Edit | AppNav     | 1     | {..}        | undefined   | true        | ignore (fires before onInit -> entityForm = undef.)
@@ -50,15 +51,17 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     //           |            | 2     | {..}        | undefined   | false       | ok
     //
     ngOnChanges(changes: SimpleChanges) {
-        if (changes['entity'].currentValue === null) {
-            this.title = 'Adauga entitate';
+        if (changes['entity'].firstChange) {
+            if (changes['entity'].currentValue === null) {
+                this.title = 'Adauga entitate';
+            } else {
+                this.isEditMode = true;
+                this.title = 'Editeaza entitate';
+            }
         } else {
             // ensure it fires only once (and after ngOnInit) ... se comments above
-            if (!changes['entity'].firstChange) {
-                this.title = `Editeaza entitate: ${this.entity.displayName}`;
-                this.isEditMode = true;
-                this.populateForm(this.entity);
-            }
+            // this.title = `${this.title}: ${this.entity.displayName}`; // optional
+            this.populateForm(this.entity);
         }
     }
 

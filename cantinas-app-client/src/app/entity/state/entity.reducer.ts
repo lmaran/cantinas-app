@@ -14,6 +14,7 @@ export function reducer(state: EntityState = initialState, action: EntityActions
         case EntityActionTypes.GET_ALL:
             return {
                 ...state,
+                currentEntityId: null,
                 loading: true,
             };
         case EntityActionTypes.GET_ALL_SUCCESS:
