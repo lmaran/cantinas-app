@@ -1,7 +1,13 @@
 import { Component, OnInit, Renderer2, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 
-import { Entity } from '../../../core/models/entity';
+import {
+    Entity,
+    EntityField,
+    SingleLineOfText,
+    SingleLineOfTextFormatOptions,
+    EntityFieldTypeOptions,
+} from '../../../core/models/entity';
 
 @Component({
     selector: 'app-entity-detail',
@@ -18,6 +24,9 @@ export class EntityDetailComponent implements OnInit, OnChanges {
     submitted: boolean;
     entityForm: FormGroup;
     title: string;
+
+    entityFields: EntityField[];
+
     private formSubmitAttempt: boolean;
 
     constructor(private formBuilder: FormBuilder, public renderer2: Renderer2) {}
@@ -27,6 +36,30 @@ export class EntityDetailComponent implements OnInit, OnChanges {
 
         // focus on first field https://stackoverflow.com/a/34573219/2726725
         this.renderer2.selectRootElement('#entityName').focus();
+
+        const field1: EntityField = {
+            displayName: 'Customer Id',
+            uniqueName: '_id',
+            type: EntityFieldTypeOptions.SINGLE_LINE_OF_TEXT,
+            typeDetails: <SingleLineOfText>{
+                format: SingleLineOfTextFormatOptions.TEXT,
+                maxLength: 100,
+            },
+            description: 'Id-ul clientului',
+        };
+
+        const field2: EntityField = {
+            displayName: 'Customer Name',
+            uniqueName: 'name',
+            type: EntityFieldTypeOptions.SINGLE_LINE_OF_TEXT,
+            typeDetails: <SingleLineOfText>{
+                format: SingleLineOfTextFormatOptions.TEXT,
+                // maxLength: 100,
+            },
+            description: 'Numele clientului',
+        };
+
+        this.entityFields = [field1, field2];
     }
 
     // the source of 'this.entity' (in parent container) is an Observable (stream)

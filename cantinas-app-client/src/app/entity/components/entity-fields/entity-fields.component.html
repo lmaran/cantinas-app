@@ -1,14 +1,21 @@
 <table class="table" style="margin-top: 0">
     <thead>
         <tr>
-            <th class="left">Wizard</th>
-            <th>Allegiance</th>
-            <th>Triwizard Champion?</th>
-            <th>Can Cast Fireball</th>
+            <th class="left">Unique Name</th>
+            <th class="left">Display Name</th>
+            <th class="left">Type</th>
+            <th class="left">Description</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr *ngFor="let entityField of entityFields">
+            <td class="left">{{entityField.uniqueName}}</td>
+            <td class="left">{{entityField.displayName}}</td>
+            <td class="left">{{entityField.type}}</td>
+            <td class="left">{{entityField.description}}</td>
+        </tr>
+
+        <!-- <tr>
             <td class="left">Harry</td>
             <td>Gryffindor</td>
             <td>Yes</td>
@@ -31,6 +38,6 @@
             <td>King Arthur</td>
             <td>Probably invented the tournament</td>
             <td>Solid maybe</td>
-        </tr>
+        </tr> -->
     </tbody>
 </table>

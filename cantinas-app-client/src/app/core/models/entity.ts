@@ -23,46 +23,47 @@ export interface Entity {
 
 export interface EntityField {
     displayName: string;
-    pluralName: string;
+    // pluralName: string;
     uniqueName: string;
     description?: string;
-    type: SingleLineOfText | MultipleLineOfText | WholeNumber | DecimalNumber | Currency | DateAndTime;
+    type: EntityFieldTypeOptions;
+    typeDetails: SingleLineOfText | MultipleLineOfText | WholeNumber | DecimalNumber | Currency | DateAndTime;
 }
 
 export interface SingleLineOfText {
-    fieldType: FieldType;
+    // fieldType: FieldType;
     format: string;
     maxLength: number;
 }
 
 export interface MultipleLineOfText {
-    fieldType: FieldType;
+    // fieldType: FieldType;
     maxLength: number;
 }
 
 export interface WholeNumber {
-    fieldType: FieldType;
-    format: string;
+    // fieldType: FieldType;
+    // format: string;
     minValue: number;
     maxValue: number;
 }
 
 export interface DecimalNumber {
-    fieldType: FieldType;
+    // fieldType: FieldType;
     precision: number;
     minValue: number;
     maxValue: number;
 }
 
 export interface Currency {
-    fieldType: FieldType;
+    // fieldType: FieldType;
     precision: number;
     minValue: number;
     maxValue: number;
 }
 
 export interface DateAndTime {
-    fieldType: FieldType;
+    // fieldType: FieldType;
     behavior: 'user-local'; // string literal type
     format: DateTimeFormat;
 }
@@ -72,10 +73,35 @@ export interface DateAndTime {
 //     CALCULATED = 'calculated',
 //     ROLLUP = 'rollup',
 // }
-type FieldType = 'simple' | 'calculated' | 'rollup'; // string literal (easier than enum)
+// export type FieldType = 'simple' | 'calculated' | 'rollup'; // string literal (shorter than enum but no intellisense)
 
-// export enum DateTimeFormat {
-//     DATE_ONLY = 'date-only',
-//     DATE_AND_TIME = 'date-and-time',
+export enum DateTimeFormat {
+    DATE_ONLY = 'date-only',
+    DATE_AND_TIME = 'date-and-time',
+}
+// export type DateTimeFormat = 'date-only' | 'date-and-time';
+
+export enum SingleLineOfTextFormatOptions {
+    TEXT = 'text',
+    TEXT_AREA = 'text-area',
+    EMAIL = 'email',
+    URL = 'url',
+    PHONE = 'phone',
+}
+
+export enum EntityFieldTypeOptions {
+    SINGLE_LINE_OF_TEXT = 'single-line-of-text',
+    MULTIPLE_LINES_OF_TEXT = 'multiple-lines-of-text',
+    WHOLE_NUMBER = 'whole-number',
+    DECIMAL_NUMBER = 'decimal-number',
+    CURRENCY = 'currency',
+    DATE_AND_TIME = 'date-and-time',
+}
+
+// export enum WholeNumberFormatOptions {
+//     NONE = 'none',
+//     TEXT_AREA = 'text-area',
+//     EMAIL = 'email',
+//     URL = 'url',
+//     PHONE = 'phone',
 // }
-type DateTimeFormat = 'date-only' | 'date-and-time';

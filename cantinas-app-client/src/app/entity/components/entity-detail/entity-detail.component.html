@@ -3,7 +3,7 @@
 </h1> -->
 <!-- <pre>{{entity | json}}</pre> -->
 
-<clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="!entityForm.valid && formSubmitAttempt">
+<clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="!entityForm.valid">
     <div class="alert-item">
         <span class="alert-text">
             Formular invalid. Corecteaza informatiile din campurile marcate.
@@ -75,7 +75,7 @@
     <section class="form-block">
         <h3>Campuri:</h3>
         <button class="btn btn-primary2 btn-sm btn-link2">Adauga camp</button>
-        <app-entity-fields></app-entity-fields>
+        <app-entity-fields [entityFields]="entityFields"></app-entity-fields>
 
     </section>
 
@@ -93,5 +93,5 @@
 
 
     <button type="submit " class="btn btn-primary ">Salveaza</button>
-    <button type="button " (click)="goBack() " class="btn ">Renunta</button>
+    <!-- <button type="button " (click)="goBack() " class="btn ">Renunta</button> -->
 </form>
