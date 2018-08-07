@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2, Input, Output, OnChanges, SimpleChanges, EventEmitter } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormArray, Validators, FormBuilder } from '@angular/forms';
 
 import {
     Entity,
@@ -59,7 +59,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
             description: 'Numele clientului',
         };
 
-        this.entityFields = [field1, field2];
+        // this.entityFields = [field1, field2];
     }
 
     // the source of 'this.entity' (in parent container) is an Observable (stream)
@@ -91,6 +91,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
         // ensure it fires only once (and after ngOnInit). Se comments above.
         if (!changes['entity'].firstChange) {
             this.populateForm(this.entity);
+            this.entityFields = this.entity.fields;
         }
     }
     // ngOnChanges(changes: SimpleChanges) {
@@ -115,13 +116,27 @@ export class EntityDetailComponent implements OnInit, OnChanges {
             pluralName: ['', [Validators.required, Validators.minLength(3)]],
             uniqueName: ['', [Validators.required, Validators.minLength(3)]],
             description: ['', [Validators.required]],
+            fields: this.formBuilder.array([]),
         });
     }
+
+    // addEmployee() {
+    //     let fg = this.formBuilder.group(field);
+    //     this.empFormArray.push(fg);
+    // }
 
     populateForm(entity: Entity) {
         this.entityForm.patchValue({
             ...entity,
         });
+
+        entity.fields.forEach(field => {
+            const fg = this.formBuilder.group(field);
+            const fieldsArray = this.entityForm.get('fields') as FormArray;
+            fieldsArray.push(fg);
+        });
+
+        console.log(this.entityForm);
     }
 
     isFieldInvalid(field: string) {

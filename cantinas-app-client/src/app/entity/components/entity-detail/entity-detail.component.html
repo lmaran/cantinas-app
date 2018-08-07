@@ -75,6 +75,33 @@
     <section class="form-block">
         <h3>Campuri:</h3>
         <button class="btn btn-primary2 btn-sm btn-link2">Adauga camp</button>
+
+
+        <div formArrayName="fields">
+            <table class="table" style="margin-top: 0">
+                <thead>
+                    <tr>
+                        <th class="left">Unique Name</th>
+                        <th class="left">Display Name</th>
+                        <th class="left">Type</th>
+                        <th class="left">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let entityField of entityForm.controls['fields'].controls; let i = index" [formGroupName]="i">
+                        <td class="left">
+                            <input type="text" formControlName="uniqueName">{{entityField.uniqueName}}</td>
+                        <td class="left">
+                            <input type="text" formControlName="displayName">{{entityField.displayName}}</td>
+                        <td class="left">
+                            <input type="text" formControlName="type"> {{entityField.type}}
+                        </td>
+                        <td class="left">{{entityField.description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
         <app-entity-fields [entityFields]="entityFields"></app-entity-fields>
 
     </section>
