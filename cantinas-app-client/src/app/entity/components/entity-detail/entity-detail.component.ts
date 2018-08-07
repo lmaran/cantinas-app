@@ -153,10 +153,6 @@ export class EntityDetailComponent implements OnInit, OnChanges {
         // This ensures values not on the form, such as the Id, are retained
         const p: Entity = { ...this.entity, ...this.entityForm.value };
 
-        console.log(this.entity);
-        console.log(this.entityForm.value);
-        console.log(p);
-
         if (p._id === undefined) {
             this.create.emit(p);
         } else {

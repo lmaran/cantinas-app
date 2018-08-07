@@ -19,6 +19,7 @@ export class EntityListPageComponent implements OnInit {
     entities$: Observable<Entity[]>;
     loading$: Observable<boolean>;
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+    title: string;
 
     constructor(private store: Store<ExtendedAppState>) {}
 
@@ -26,6 +27,7 @@ export class EntityListPageComponent implements OnInit {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
         this.store.dispatch(new EntityActions.GetAll());
+        this.title = 'Entitati';
     }
 
     refreshEntityList() {
