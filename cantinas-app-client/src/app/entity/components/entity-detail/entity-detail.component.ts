@@ -116,7 +116,7 @@ export class EntityDetailComponent implements OnInit, OnChanges {
             pluralName: ['', [Validators.required, Validators.minLength(3)]],
             uniqueName: ['', [Validators.required, Validators.minLength(3)]],
             description: ['', [Validators.required]],
-            fields: this.formBuilder.array([]),
+            // fields: this.formBuilder.array([]),
         });
     }
 
@@ -130,13 +130,15 @@ export class EntityDetailComponent implements OnInit, OnChanges {
             ...entity,
         });
 
-        entity.fields.forEach(field => {
-            const fg = this.formBuilder.group(field);
-            const fieldsArray = this.entityForm.get('fields') as FormArray;
-            fieldsArray.push(fg);
-        });
+        // if (entity.fields) {
+        //     entity.fields.forEach(field => {
+        //         const fg = this.formBuilder.group(field);
+        //         const fieldsArray = this.entityForm.get('fields') as FormArray;
+        //         fieldsArray.push(fg);
+        //     });
+        // }
 
-        console.log(this.entityForm);
+        // console.log(this.entityForm);
     }
 
     isFieldInvalid(field: string) {

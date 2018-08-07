@@ -77,7 +77,7 @@
         <button class="btn btn-primary2 btn-sm btn-link2">Adauga camp</button>
 
 
-        <div formArrayName="fields">
+        <!-- <div formArrayName="fields">
             <table class="table" style="margin-top: 0">
                 <thead>
                     <tr>
@@ -100,9 +100,9 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
 
-        <app-entity-fields [entityFields]="entityFields"></app-entity-fields>
+        <app-entity-fields [entityFields]="entity && entity.fields"></app-entity-fields>
 
     </section>
 
