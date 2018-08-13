@@ -19,9 +19,5 @@ export class EntityFieldsComponent {
         });
     };
 
-    editEntityField = function(field) {
-        this.modal.open(`${field.displayName}`, () => {
-            this.delete.emit(field);
-        });
-    };
+    editEntityField = function(field) {};
 }

@@ -1,0 +1,26 @@
+<nav>
+    <button ng-click="vm.goBack();" type="button" class="btn btn-sm" style="margin-right:15px; display2: inline">
+        <clr-icon shape="arrow left"></clr-icon> Inapoi
+    </button>
+
+    <ol class="breadcrumb" style="display: inline">
+        <li>
+            <a href="/home">
+                <clr-icon shape="home"></clr-icon>
+            </a>
+        </li>
+
+        <!-- <li>
+            <a href="/admin/orders">Comenzi</a>
+        </li>
+        <li>
+            <a ng-href="/admin/orders/5b6a62a678cb2621f28a0f11" href="/admin/orders/5b6a62a678cb2621f28a0f11">Comanda: 08 Aug. 2018</a>
+        </li>
+        <li class="active">Andor Ovidiu</li> -->
+
+        <li *ngFor="let b of breadcrumbItems; let last = last" [ngClass]="{ 'active' : last }">
+            <a *ngIf="!last" [routerLink]="b.url">{{b.name}}</a>
+            <span *ngIf="last">{{b.name}}</span>
+        </li>
+    </ol>
+</nav>

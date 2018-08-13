@@ -3,13 +3,13 @@
 </h1> -->
 <!-- <pre>{{entity | json}}</pre> -->
 
-<clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="!entityForm.valid">
+<!-- <clr-alert [clrAlertType]="'alert-danger'" [clrAlertClosable]="false" *ngIf="!entityForm.valid">
     <div class="alert-item">
         <span class="alert-text">
             Formular invalid. Corecteaza informatiile din campurile marcate.
         </span>
     </div>
-</clr-alert>
+</clr-alert> -->
 
 <form class="form" [formGroup]="entityForm" (ngSubmit)="saveEntity()" [hidden]="submitted" novalidate>
     <section class="form-block">
@@ -74,7 +74,7 @@
 
     <section class="form-block">
         <h3>Campuri:</h3>
-        <button type="button" [routerLink]="['/entities/new']" class="btn btn-primary2 btn-sm btn-link2">Adauga camp</button>
+        <button type="button" [routerLink]="['fields/new']" class="btn btn-primary btn-sm btn-link2">Adauga camp</button>
 
 
         <!-- <div formArrayName="fields">

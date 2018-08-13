@@ -9,6 +9,7 @@ const routes: Routes = [
     { path: '', component: EntityListPageComponent },
     { path: 'new', component: EntityCreatePageComponent },
     { path: ':id', component: EntityEditPageComponent },
+    { path: ':id/fields/new', component: EntityCreatePageComponent },
 ];
 
 @NgModule({
