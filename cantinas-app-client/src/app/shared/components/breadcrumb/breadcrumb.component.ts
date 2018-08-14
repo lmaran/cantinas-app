@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BreadcrumbItem } from '../../interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
 
 @Component({
     selector: 'app-breadcrumb',
@@ -8,8 +8,7 @@ import { BreadcrumbItem } from '../../interfaces/breadcrumb-item.interface';
 })
 export class BreadcrumbComponent implements OnInit {
     @Input() breadcrumbItems: BreadcrumbItem[];
-    // verticalNavIsCollapsed = false;
-    // navGroupAdminIsExpanded = true;
+
     constructor() {}
 
     ngOnInit() {}

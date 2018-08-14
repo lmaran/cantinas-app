@@ -6,10 +6,11 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
 import * as RouterActions from '../../../core/state/router/router.actions';
-import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
+import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
 import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.selectors';
 
 @Component({
     selector: 'app-entity-list-page',
@@ -22,6 +23,7 @@ export class EntityListPageComponent implements OnInit {
     loading$: Observable<boolean>;
     refreshBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
     title: string;
+    breadcrumbItems$: Observable<BreadcrumbItem[]>;
 
     constructor(private store: Store<ExtendedAppState>) {}
 
@@ -31,17 +33,17 @@ export class EntityListPageComponent implements OnInit {
         this.store.dispatch(new EntityActions.GetAll());
         this.title = 'Entitati';
 
-        // https://stackoverflow.com/a/47206133
-        setTimeout(() => {
-            const breadcrumbItems: BreadcrumbItem[] = [
-                {
-                    name: 'Entitati',
-                    url: '/entities',
-                },
-            ];
+        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
+        this.store.dispatch(new BreadcrumbActions.GetBreadcrumb());
 
-            this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
-        });
+        const breadcrumbItems: BreadcrumbItem[] = [
+            {
+                name: 'Entitati',
+                url: '/entities',
+            },
+        ];
+
+        this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
     }
 
     refreshEntityList() {

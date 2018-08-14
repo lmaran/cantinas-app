@@ -10,16 +10,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ClarityModule } from '@clr/angular';
+import { RouterModule } from '@angular/router';
 
 // components
 import { AppModalComponent } from './components/confirmDelete/confirmDelete.component';
 import { DisplayErrorComponent } from './components/display-error/display-error.component';
 import { MessagesComponent } from './components/messages/messages.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 // directives, pipes
 
-export const MODULES = [CommonModule, ReactiveFormsModule, ClarityModule];
-export const COMPONENTS = [AppModalComponent, DisplayErrorComponent, MessagesComponent];
+export const MODULES = [CommonModule, ReactiveFormsModule, ClarityModule, RouterModule];
+export const COMPONENTS = [AppModalComponent, DisplayErrorComponent, MessagesComponent, BreadcrumbComponent];
 
 @NgModule({
     imports: [...MODULES],

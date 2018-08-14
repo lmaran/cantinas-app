@@ -29,7 +29,6 @@ import { AuthenticationService } from './services/authentication.service';
 import { Layout2Component } from './components/layout2/layout2.component';
 import { Header2Component } from './components/header2/header2.component';
 import { VerticalNavComponent } from './components/vertical-nav/vertical-nav.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { AboutComponent } from './components/about/about.component';
 import { HomeComponent } from './components/home/home.component';
 import { UserListComponent } from './components/user/user-list/user-list.component';
@@ -47,7 +46,6 @@ export const COMPONENTS = [
     Layout2Component,
     Header2Component,
     VerticalNavComponent,
-    BreadcrumbComponent,
 
     AboutComponent,
     HomeComponent,

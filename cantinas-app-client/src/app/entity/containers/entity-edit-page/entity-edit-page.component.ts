@@ -9,6 +9,9 @@ import * as EntitySelectors from '../../state/entity.selectors';
 import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ofType } from '@ngrx/effects';
+import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.selectors';
 
 @Component({
     selector: 'app-entity-edit-page',
@@ -19,6 +22,7 @@ import { ofType } from '@ngrx/effects';
 export class EntityEditPageComponent implements OnInit, OnDestroy {
     entity$: Observable<Entity>;
     redirectSub$: Subscription;
+    breadcrumbItems$: Observable<BreadcrumbItem[]>;
 
     title: string;
 
@@ -53,6 +57,22 @@ export class EntityEditPageComponent implements OnInit, OnDestroy {
             .asObservable()
             .pipe(ofType(EntityActions.EntityActionTypes.UPDATE_SUCCESS))
             .subscribe((action: EntityActions.UpdateEntitySuccess) => this.router.navigate(['/entities']));
+
+        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
+        this.store.dispatch(new BreadcrumbActions.GetBreadcrumb());
+
+        const breadcrumbItems: BreadcrumbItem[] = [
+            {
+                name: 'Entitati',
+                url: '/entities',
+            },
+            {
+                name: 'Entitate: Produs',
+                url: '/entities',
+            },
+        ];
+
+        this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
     }
 
     updateEntity(entity: Entity): void {
