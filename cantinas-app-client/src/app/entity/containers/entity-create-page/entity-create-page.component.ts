@@ -8,6 +8,9 @@ import * as RouterActions from '../../../core/state/router/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.selectors';
 
 @Component({
     selector: 'app-entity-create-page',
@@ -17,17 +20,28 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EntityCreatePageComponent implements OnInit {
     entity$: Observable<Entity>;
-
+    breadcrumbItems$: Observable<BreadcrumbItem[]>;
     title: string;
 
     constructor(private store: Store<ExtendedAppState>) {}
 
     ngOnInit() {
         this.title = 'Adauga entitate';
+        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
+        const breadcrumbItems: BreadcrumbItem[] = [
+            {
+                name: 'Entitati',
+                url: '/entities',
+            },
+            {
+                name: this.title,
+                url: '',
+            },
+        ];
+        this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
     }
 
     goBack = function() {
-        // this.store.dispatch(new EntityActions.GoBack());
         this.store.dispatch(new RouterActions.Back());
     };
 }

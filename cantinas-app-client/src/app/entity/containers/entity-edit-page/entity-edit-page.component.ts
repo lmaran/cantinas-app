@@ -22,6 +22,7 @@ import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.
 export class EntityEditPageComponent implements OnInit, OnDestroy {
     entity$: Observable<Entity>;
     redirectSub$: Subscription;
+    entitySub$: Subscription;
     breadcrumbItems$: Observable<BreadcrumbItem[]>;
 
     title: string;
@@ -36,6 +37,7 @@ export class EntityEditPageComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.title = 'Editeaza entitate';
         this.entity$ = this.store.select(EntitySelectors.getCurrentEntity);
+        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
 
         // const id: string = this.route.snapshot.params.id;
 
@@ -58,25 +60,25 @@ export class EntityEditPageComponent implements OnInit, OnDestroy {
             .pipe(ofType(EntityActions.EntityActionTypes.UPDATE_SUCCESS))
             .subscribe((action: EntityActions.UpdateEntitySuccess) => this.router.navigate(['/entities']));
 
-        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
-        this.store.dispatch(new BreadcrumbActions.GetBreadcrumb());
-
-        const breadcrumbItems: BreadcrumbItem[] = [
-            {
-                name: 'Entitati',
-                url: '/entities',
-            },
-            {
-                name: 'Entitate: Produs',
-                url: '/entities',
-            },
-        ];
-
-        this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
+        this.entitySub$ = this.actionsSubject
+            .asObservable()
+            .pipe(ofType(EntityActions.EntityActionTypes.GET_ONE_SUCCESS))
+            .subscribe((action: EntityActions.GetOneSuccess) => {
+                const breadcrumbItems: BreadcrumbItem[] = [
+                    {
+                        name: 'Entitati',
+                        url: '/entities',
+                    },
+                    {
+                        name: action.payload.displayName,
+                        url: '',
+                    },
+                ];
+                this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
+            });
     }
 
     updateEntity(entity: Entity): void {
-        console.log(333);
         this.store.dispatch(new EntityActions.UpdateEntity(entity));
     }
 
@@ -86,5 +88,6 @@ export class EntityEditPageComponent implements OnInit, OnDestroy {
 
     ngOnDestroy() {
         this.redirectSub$.unsubscribe();
+        this.entitySub$.unsubscribe();
     }
 }

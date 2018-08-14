@@ -30,11 +30,9 @@ export class EntityListPageComponent implements OnInit {
     ngOnInit() {
         this.entities$ = this.store.select(EntitySelectors.getEntities);
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
+        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
         this.store.dispatch(new EntityActions.GetAll());
         this.title = 'Entitati';
-
-        this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
-        this.store.dispatch(new BreadcrumbActions.GetBreadcrumb());
 
         const breadcrumbItems: BreadcrumbItem[] = [
             {

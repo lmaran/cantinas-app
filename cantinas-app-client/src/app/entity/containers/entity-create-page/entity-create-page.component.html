@@ -6,6 +6,8 @@
     </div>
 </clr-alert> -->
 
+<app-breadcrumb [breadcrumbItems]="breadcrumbItems$ | async"></app-breadcrumb>
+
 <h1>{{title}}</h1>
 
 <button class="btn btn-primary" (click)="goBack()">

@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import * as RouterActions from '../../../core/state/router/router.actions';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../core/state/app-state.interfaces';
 
 @Component({
     selector: 'app-breadcrumb',
@@ -9,7 +12,11 @@ import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interfa
 export class BreadcrumbComponent implements OnInit {
     @Input() breadcrumbItems: BreadcrumbItem[];
 
-    constructor() {}
+    constructor(private store: Store<AppState>) {}
 
     ngOnInit() {}
+
+    goBack = function() {
+        this.store.dispatch(new RouterActions.Back());
+    };
 }
