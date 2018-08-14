@@ -4,7 +4,7 @@
     <div class="content-container">
         <div class="content-area" [@routerTransition]="getState(o)">
 
-            <app-breadcrumb [breadcrumbItems]="breadcrumbItems"></app-breadcrumb>
+            <app-breadcrumb [breadcrumbItems]="breadcrumbItems$ | async"></app-breadcrumb>
 
             <router-outlet #o="outlet"></router-outlet>
         </div>

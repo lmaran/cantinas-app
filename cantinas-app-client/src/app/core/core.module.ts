@@ -39,9 +39,9 @@ import { DishDetailComponent } from './components/dish/dish-detail/dish-detail.c
 
 // others
 import { environment } from '../../environments/environment';
-import { RouterEffects } from './state/effects/router.effects';
-import { CustomSerializer } from './state/router-state.serializer';
-import { reducers, metaReducers } from './state/reducers';
+import { RouterEffects } from './state/router/router.effects';
+import { CustomSerializer } from './state/router/router-state.serializer';
+import { reducers, metaReducers } from './state/app.reducers';
 
 export const COMPONENTS = [
     Layout2Component,

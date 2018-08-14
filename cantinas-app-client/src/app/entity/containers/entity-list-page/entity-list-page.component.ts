@@ -5,7 +5,7 @@ import { ClrLoadingState } from '@clr/angular';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
-import * as RouterActions from '../../../core/state/actions/router.actions';
+import * as RouterActions from '../../../core/state/router/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 

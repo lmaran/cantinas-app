@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Effect, Actions } from '@ngrx/effects';
 import { map, tap } from 'rxjs/operators';
-import * as RouterActions from '../actions/router.actions';
+import * as RouterActions from './router.actions';
 
 // https://github.com/ngrx/platform/blob/master/docs/router-store/api.md#effects
 // https://github.com/amcdnl/ngrx-router + https://medium.com/@amcdnl/angular-routing-data-with-ngrx-effects-1cda1bd5e579
