@@ -82,10 +82,6 @@ export class EntityEditPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(new EntityActions.UpdateEntity(entity));
     }
 
-    goBack = function() {
-        this.store.dispatch(new RouterActions.Back());
-    };
-
     ngOnDestroy() {
         this.redirectSub$.unsubscribe();
         this.entitySub$.unsubscribe();

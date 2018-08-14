@@ -40,8 +40,4 @@ export class EntityCreatePageComponent implements OnInit {
         ];
         this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
     }
-
-    goBack = function() {
-        this.store.dispatch(new RouterActions.Back());
-    };
 }

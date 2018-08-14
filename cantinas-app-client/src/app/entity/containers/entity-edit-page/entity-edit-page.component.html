@@ -10,9 +10,4 @@
 
 <h1>{{title}}</h1>
 
-<button class="btn btn-primary" (click)="goBack()">
-    <clr-icon shape="plus"></clr-icon>
-    Go Back
-</button>
-
 <app-entity-detail (update)="updateEntity($event)" [entity]=" entity$ | async"></app-entity-detail>

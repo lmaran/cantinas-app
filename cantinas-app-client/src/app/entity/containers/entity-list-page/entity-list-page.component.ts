@@ -52,10 +52,6 @@ export class EntityListPageComponent implements OnInit {
         this.store.dispatch(new EntityActions.DeleteEntity(entity._id));
     };
 
-    goBack = function() {
-        this.store.dispatch(new RouterActions.Back());
-    };
-
     // goToAddEntity = function() {
     //     this.store.dispatch(new RouterActions.Go({ path: ['/entities/new'] }));
     // };
