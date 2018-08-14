@@ -3,11 +3,11 @@ import { EntityField } from '../../../core/models/entity';
 import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
 
 @Component({
-    selector: 'app-entity-fields',
-    templateUrl: './entity-fields.component.html',
-    styleUrls: ['./entity-fields.component.scss'],
+    selector: 'app-entity-field-list',
+    templateUrl: './entity-field-list.component.html',
+    styleUrls: ['./entity-field-list.component.scss'],
 })
-export class EntityFieldsComponent {
+export class EntityFieldListComponent {
     @Input() entityFields: EntityField[];
 
     // Don't forget to add this (child) component in the current html
