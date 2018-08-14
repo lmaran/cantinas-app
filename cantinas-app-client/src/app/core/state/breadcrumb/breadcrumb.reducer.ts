@@ -16,32 +16,18 @@ const initialState: BreadcrumbState = {
             url: '/entities',
         },
     ],
-    error: '',
 };
 
 export function breadcrumbReducer(state: BreadcrumbState = initialState, action: BreadcrumbActions): BreadcrumbState {
     switch (action.type) {
-        // get all
-        case BreadcrumbActionTypes.GET_ALL:
+        case BreadcrumbActionTypes.GET_BREADCRUMB:
             return {
                 ...state,
-                // currentEntityId: null,
-                // loading: true,
             };
-        case BreadcrumbActionTypes.GET_ALL_SUCCESS:
+        case BreadcrumbActionTypes.SET_BREADCRUMB:
             return {
                 ...state,
                 breadcrumbItems: [...action.payload],
-                // loading: false,
-                error: '',
-            };
-
-        case BreadcrumbActionTypes.GET_ALL_FAIL:
-            return {
-                ...state,
-                breadcrumbItems: [],
-                // loading: false,
-                error: action.payload,
             };
 
         default:

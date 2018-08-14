@@ -6,8 +6,10 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import * as EntityActions from '../../state/entity.actions';
 import * as RouterActions from '../../../core/state/router/router.actions';
+import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
 
 @Component({
     selector: 'app-entity-list-page',
@@ -28,6 +30,18 @@ export class EntityListPageComponent implements OnInit {
         this.loading$ = this.store.select(EntitySelectors.isEntityLoading);
         this.store.dispatch(new EntityActions.GetAll());
         this.title = 'Entitati';
+
+        // https://stackoverflow.com/a/47206133
+        setTimeout(() => {
+            const breadcrumbItems: BreadcrumbItem[] = [
+                {
+                    name: 'Entitati',
+                    url: '/entities',
+                },
+            ];
+
+            this.store.dispatch(new BreadcrumbActions.SetBreadcrumb(breadcrumbItems));
+        });
     }
 
     refreshEntityList() {

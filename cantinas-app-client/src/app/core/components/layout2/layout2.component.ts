@@ -40,7 +40,7 @@ export class Layout2Component implements OnInit {
         //     },
         // ];
         this.breadcrumbItems$ = this.store.select(BreadcrumbSelectors.getBreadcrumbItems);
-        this.store.dispatch(new BreadcrumbActions.GetAll());
+        this.store.dispatch(new BreadcrumbActions.GetBreadcrumb());
     }
 
     getState(outlet) {

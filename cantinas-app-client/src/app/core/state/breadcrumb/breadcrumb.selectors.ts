@@ -6,5 +6,3 @@ const getBreadcrumbState = createFeatureSelector<BreadcrumbState>('breadcrumb');
 
 // here 'state' is the result of first argument
 export const getBreadcrumbItems = createSelector(getBreadcrumbState, state => state.breadcrumbItems);
-
-export const getError = createSelector(getBreadcrumbState, state => state.error);
