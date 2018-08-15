@@ -10,11 +10,11 @@ import {
 } from '../../../core/interfaces/entity.interfaces';
 
 @Component({
-    selector: 'app-entity-detail',
-    templateUrl: './entity-detail.component.html',
-    styleUrls: ['./entity-detail.component.scss'],
+    selector: 'app-entity-field-detail',
+    templateUrl: './entity-field-detail.component.html',
+    styleUrls: ['./entity-field-detail.component.scss'],
 })
-export class EntityDetailComponent implements OnInit, OnChanges {
+export class EntityFieldDetailComponent implements OnInit, OnChanges {
     @Input() entity: Entity;
     // isEditMode: boolean;
 

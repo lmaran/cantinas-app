@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Entity } from '../models/entity';
+import { Entity } from '../interfaces/entity.interfaces';
 
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';

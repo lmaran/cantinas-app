@@ -16,6 +16,7 @@ import { EntityEditPageComponent } from './containers/entity-edit-page/entity-ed
 import { EntityListComponent } from './components/entity-list/entity-list.component';
 import { EntityDetailComponent } from './components/entity-detail/entity-detail.component';
 import { EntityFieldListComponent } from './components/entity-field-list/entity-field-list.component';
+import { EntityFieldDetailComponent } from './components/entity-field-detail/entity-field-detail.component';
 
 // ngrx store
 import { reducer } from './state/entity.reducer';
@@ -23,7 +24,12 @@ import { EntityEffects } from './state/entity.effects';
 // import { RouterEffects } from '../core/state/effects/router.effects';
 
 export const CONTAINERS = [EntityListPageComponent, EntityCreatePageComponent, EntityEditPageComponent];
-export const COMPONENTS = [EntityListComponent, EntityDetailComponent, EntityFieldListComponent];
+export const COMPONENTS = [
+    EntityListComponent,
+    EntityDetailComponent,
+    EntityFieldListComponent,
+    EntityFieldDetailComponent,
+];
 
 @NgModule({
     imports: [

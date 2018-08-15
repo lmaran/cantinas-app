@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { BreadcrumbItem } from '../../interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../interfaces/breadcrumb.interfaces';
 
 export enum BreadcrumbActionTypes {
     SET_BREADCRUMB = '[Breadcrumb] Set Breadcrumb',

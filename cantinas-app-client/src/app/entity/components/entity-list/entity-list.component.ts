@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, ViewChild } from '@angular/core';
-import { Entity } from '../../../core/models/entity';
+import { Entity } from '../../../core/interfaces/entity.interfaces';
 import { AppModalComponent } from '../../../shared/components/confirmDelete/confirmDelete.component';
 
 @Component({

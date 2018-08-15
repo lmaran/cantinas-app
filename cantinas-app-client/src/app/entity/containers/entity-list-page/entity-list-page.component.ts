@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Entity } from '../../../core/models/entity';
+import { Entity } from '../../../core/interfaces/entity.interfaces';
 import { ClrLoadingState } from '@clr/angular';
 
 import { Observable, of } from 'rxjs';
@@ -9,7 +9,7 @@ import * as RouterActions from '../../../core/state/router/router.actions';
 import * as EntitySelectors from '../../state/entity.selectors';
 import { ExtendedAppState } from '../../state/entity.interfaces';
 import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
-import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb.interfaces';
 import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.selectors';
 
 @Component({

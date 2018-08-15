@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb.interfaces';
 import * as RouterActions from '../../../core/state/router/router.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../core/state/app-state.interfaces';

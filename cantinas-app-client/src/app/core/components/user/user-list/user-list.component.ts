@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../../models/user';
+import { User } from '../../../interfaces/user.interfaces';
 import { UserService } from '../../../services/user.service';
 import { AppModalComponent } from '../../../../shared/components/confirmDelete/confirmDelete.component';
 
@@ -10,11 +10,11 @@ import { AppModalComponent } from '../../../../shared/components/confirmDelete/c
     providers: [UserService],
 })
 export class UserListComponent implements OnInit {
-    newUser: User = new User();
+    newUser: User;
 
     users: User[] = [];
     deleteModal = false;
-    selectedUser: User = new User();
+    selectedUser: User;
 
     // Don't forget to add this (child) component in the current html
     @ViewChild(AppModalComponent) modal: AppModalComponent;

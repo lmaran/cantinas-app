@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Entity } from '../../../core/models/entity';
+import { Entity } from '../../../core/interfaces/entity.interfaces';
 
 import { Store, ActionsSubject } from '@ngrx/store';
 import { ExtendedAppState } from '../../state/entity.interfaces';
@@ -10,7 +10,7 @@ import { Observable, Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ofType } from '@ngrx/effects';
 import * as BreadcrumbActions from '../../../core/state/breadcrumb/breadcrumb.actions';
-import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../../core/interfaces/breadcrumb.interfaces';
 import * as BreadcrumbSelectors from '../../../core/state/breadcrumb/breadcrumb.selectors';
 
 @Component({

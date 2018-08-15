@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { ValidationService } from '../../../services/validation.service';
 
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../models/user';
+import { User } from '../../../interfaces/user.interfaces';
 
 @Component({
     selector: 'app-user-detail',

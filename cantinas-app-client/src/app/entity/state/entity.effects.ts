@@ -10,7 +10,7 @@ import { EntityService } from '../../core/services/entity.service';
 import { Action } from '@ngrx/store';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as entityActions from './entity.actions';
-import { Entity } from '../../core/models/entity';
+import { Entity } from '../../core/interfaces/entity.interfaces';
 
 @Injectable()
 export class EntityEffects {

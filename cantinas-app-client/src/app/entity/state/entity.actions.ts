@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Entity } from '../../core/models/entity';
+import { Entity } from '../../core/interfaces/entity.interfaces';
 
 export enum EntityActionTypes {
     // SetCurrentEntity = '[Entity] Set Current Entity',

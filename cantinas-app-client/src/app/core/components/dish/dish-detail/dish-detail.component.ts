@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 // import { ValidationService } from '../../../services/validation.service';
 
 import { DishService } from '../../../services/dish.service';
-import { Dish } from '../../../models/dish';
+import { Dish } from '../../../interfaces/dish.interfaces';
 
 @Component({
     selector: 'app-dish-detail',

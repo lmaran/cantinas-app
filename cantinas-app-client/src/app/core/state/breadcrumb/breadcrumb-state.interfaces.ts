@@ -1,4 +1,4 @@
-import { BreadcrumbItem } from '../../interfaces/breadcrumb-item.interface';
+import { BreadcrumbItem } from '../../interfaces/breadcrumb.interfaces';
 
 export interface BreadcrumbState {
     breadcrumbItems: BreadcrumbItem[];

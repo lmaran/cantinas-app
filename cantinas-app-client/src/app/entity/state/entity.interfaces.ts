@@ -1,5 +1,5 @@
 import { AppState } from '../../core/state/app-state.interfaces';
-import { Entity } from '../../core/models/entity';
+import { Entity } from '../../core/interfaces/entity.interfaces';
 
 // Extends the app state to include the entity feature.
 // This is required because entities are lazy loaded.

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Dish } from '../../../models/dish';
+import { Dish } from '../../../interfaces/dish.interfaces';
 import { DishService } from '../../../services/dish.service';
 import { AppModalComponent } from '../../../../shared/components/confirmDelete/confirmDelete.component';
 
@@ -10,11 +10,11 @@ import { AppModalComponent } from '../../../../shared/components/confirmDelete/c
     providers: [DishService],
 })
 export class DishListComponent implements OnInit {
-    newDish: Dish = new Dish();
+    newDish: Dish;
 
     dishes: Dish[] = [];
     deleteModal = false;
-    selectedDish: Dish = new Dish();
+    selectedDish: Dish;
     title: string;
     categoryList: any;
 
